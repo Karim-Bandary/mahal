@@ -150,11 +150,6 @@ table.prev th{background:var(--green-soft); color:var(--green)}
 .problem{background:var(--amber-soft); border-radius:10px; padding:10px; font-size:13px; margin-top:10px; max-height:180px; overflow-y:auto}
 
 /* ═════════ نقطة البيع ═════════ */
-.pos-res{max-height:260px; overflow-y:auto; margin-top:10px}
-.pos-res .hit{display:flex; justify-content:space-between; gap:8px; align-items:center; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:6px; cursor:pointer}
-.pos-res .hit:active{background:var(--green-soft)}
-.pos-res .hit .h-name{font-weight:700; font-size:15px}
-.pos-res .hit .h-sub{font-size:12.5px; color:var(--muted)}
 .cart-row{border:1px solid var(--line); border-radius:12px; padding:10px; margin-bottom:8px}
 .cart-top{display:flex; justify-content:space-between; gap:8px; align-items:flex-start}
 .cart-name{font-weight:700; font-size:15px; line-height:1.4}
@@ -176,6 +171,55 @@ table.inv{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:8px
 table.inv th,table.inv td{border-bottom:1px solid var(--line); padding:7px 6px; text-align:right}
 table.inv th{color:var(--muted); font-size:12.5px}
 table.inv td.num{text-align:center; white-space:nowrap}
+
+/* ═════════ نتايج البحث (شاشة الشراء) ═════════ */
+.pos-res{max-height:260px; overflow-y:auto; margin-top:10px}
+.pos-res .hit{display:flex; justify-content:space-between; gap:8px; align-items:center;
+  border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:6px; cursor:pointer}
+.pos-res .hit:active{background:var(--green-soft)}
+.pos-res .hit .h-name{font-weight:700; font-size:15px}
+.pos-res .hit .h-sub{font-size:12.5px; color:var(--muted)}
+
+/* ═════════ كروت الأصناف في البيع ═════════ */
+.catbar{display:flex; gap:6px; overflow-x:auto; padding:2px 0 6px; margin-top:10px}
+.catbar button{flex:0 0 auto; min-height:40px; padding:8px 14px; font-size:14px; font-weight:600;
+  background:#fff; color:var(--muted); border:1.5px solid var(--line); border-radius:20px; white-space:nowrap}
+.catbar button.on{background:var(--green); color:#fff; border-color:var(--green)}
+.pgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px}
+.pf-row{display:flex; justify-content:space-between; gap:10px; padding:9px 2px; border-bottom:1px dashed var(--line)}
+.pf-row.tot{border-bottom:0; border-top:2px solid var(--line); font-weight:800; font-size:17px; margin-top:4px}
+.pf-row .neg{color:var(--red)}
+.neg{color:var(--red)}
+.warn-box{background:var(--red-soft); color:var(--red); border-radius:10px; padding:10px 12px; font-size:14px; font-weight:600; line-height:1.6}
+.pf-note{font-size:13px; color:var(--muted); line-height:1.7; margin-top:10px}
+.pcard{position:relative; border:1.5px solid var(--line); border-radius:14px; padding:10px 8px; background:#fff;
+  cursor:pointer; min-height:96px; display:flex; flex-direction:column; justify-content:space-between; text-align:center}
+.pcard:active{transform:scale(.97)}
+.pcard.in{border-color:var(--green); background:var(--green-soft)}
+.pcard.out{opacity:.75}
+.pcard .pn{font-weight:700; font-size:13.5px; line-height:1.35; overflow:hidden;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical}
+.pcard .pq{font-size:12px; color:var(--muted); margin-top:6px; font-weight:600}
+.pcard .pq.low{color:#8a6d00}
+.pcard .pq.zero{color:var(--red)}
+.pcard .incart{position:absolute; top:-8px; left:-6px; background:var(--green); color:#fff;
+  min-width:26px; height:26px; border-radius:13px; font-size:13px; font-weight:800;
+  display:flex; align-items:center; justify-content:center; padding:0 6px; box-shadow:var(--shadow)}
+@media(min-width:520px){ .pgrid{grid-template-columns:repeat(3,1fr)} }
+@media(min-width:760px){ .pgrid{grid-template-columns:repeat(4,1fr)} }
+
+/* ═════════ الخزنة ═════════ */
+.box-card{border-radius:16px; padding:16px; margin-bottom:12px; color:#fff}
+.box-card.drawer{background:linear-gradient(135deg,#157347,#0f5132)}
+.box-card.main{background:linear-gradient(135deg,#1b4b91,#12336b)}
+.box-card .bk{font-size:14px; opacity:.9}
+.box-card .bv{font-size:30px; font-weight:800; margin-top:4px; direction:ltr; text-align:right}
+.box-card .bn{font-size:12.5px; opacity:.85; margin-top:6px}
+.cash-row{border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:8px}
+.cash-amt{font-weight:800; white-space:nowrap}
+.cash-in{color:var(--green)}
+.cash-out{color:var(--red)}
+.badge-move{background:#eef2f7; color:#42546b}
 
 /* ═════════ الطباعة (A4) ═════════ */
 #printArea{display:none}
@@ -249,27 +293,47 @@ table.pr td.c{text-align:center}
     <!-- ── الرئيسية ── -->
     <section id="tab-home" class="tabpane">
       <div class="card">
-        <h2>👋 أهلاً <span id="homeName"></span></h2>
-        <p class="desc" id="homeRole"></p>
-        <div class="stat-grid">
-          <div class="stat"><div class="k">المحل</div><div class="v" id="stStore">—</div></div>
-          <div class="stat"><div class="k">صلاحيتك</div><div class="v" id="stRole">—</div></div>
-          <div class="stat"><div class="k">نسخة السيستم</div><div class="v" id="stVer">—</div></div>
+        <div class="head-row" style="align-items:flex-start">
+          <div>
+            <h2 style="margin:0">👋 أهلاً <span id="homeName"></span></h2>
+            <p class="desc" id="homeRole" style="margin:4px 0 0"></p>
+          </div>
+          <button class="btn-2 btn-sm" id="btnDashReload" type="button">🔄</button>
         </div>
       </div>
 
       <div class="card">
-        <h2>🚧 السيستم لسه بيتبني</h2>
-        <p class="desc">دي <b>المرحلة ٢</b>: البيع والفواتير والطباعة — زيادة على المخزون.</p>
-        <div class="list">
-          <div class="row-item"><div class="row-name">✅ تسجيل الدخول والصلاحيات</div><div class="row-sub">شغّال دلوقتي</div></div>
-          <div class="row-item"><div class="row-name">✅ بيانات المحل والمستخدمين</div><div class="row-sub">شغّال دلوقتي</div></div>
-          <div class="row-item"><div class="row-name">✅ المخزون والأصناف</div><div class="row-sub">شغّال دلوقتي</div></div>
-          <div class="row-item"><div class="row-name">✅ نقطة البيع والفواتير</div><div class="row-sub">شغّال دلوقتي</div></div>
-          <div class="row-item"><div class="row-name">⬜ الخزنة والحساب العام</div><div class="row-sub">المرحلة ٣</div></div>
-          <div class="row-item"><div class="row-name">⬜ المشتريات والمصروفات والأرباح</div><div class="row-sub">المراحل ٤ و ٥</div></div>
-          <div class="row-item"><div class="row-name">⬜ الشركاء والداشبورد</div><div class="row-sub">المرحلة ٦</div></div>
+        <h2>💰 الفلوس دلوقتي</h2>
+        <div class="stat-grid">
+          <div class="stat"><div class="k">درج الكاشير</div><div class="v" id="dbDrawer">—</div></div>
+          <div class="stat admin-only"><div class="k">الحساب العام</div><div class="v" id="dbMain">—</div></div>
         </div>
+        <div class="stat admin-only" style="margin-top:10px"><div class="k">الإجمالي</div><div class="v" id="dbTotal">—</div></div>
+        <div class="pf-note" id="dbToday">—</div>
+      </div>
+
+      <div class="card admin-only">
+        <h2>📊 الأرباح</h2>
+        <div class="subtabs" id="dbProfSubs" style="margin-bottom:10px">
+          <button type="button" data-dbp="month" class="on">الشهر ده</button>
+          <button type="button" data-dbp="all">من أول السيستم</button>
+        </div>
+        <div id="dbProfit"><div class="empty">بحمّل…</div></div>
+      </div>
+
+      <div class="card admin-only">
+        <h2>🤝 الشركاء</h2>
+        <div id="dbPartners"><div class="empty">بحمّل…</div></div>
+      </div>
+
+      <div class="card">
+        <h2>⚠️ بضاعة قربت تخلص</h2>
+        <div id="dbLow"><div class="empty">بحمّل…</div></div>
+      </div>
+
+      <div class="card admin-only">
+        <h2>🧾 آخر الفواتير</h2>
+        <div id="dbLast"><div class="empty">بحمّل…</div></div>
       </div>
     </section>
 
@@ -350,7 +414,11 @@ table.pr td.c{text-align:center}
         <h2>🛒 فاتورة جديدة</h2>
         <label for="posSearch" style="margin-top:0">دوّر على الصنف</label>
         <input id="posSearch" type="search" placeholder="اكتب اسم الصنف أو الكود…" autocomplete="off">
-        <div class="pos-res" id="posRes"></div>
+        <div class="catbar" id="posCats"></div>
+        <div class="mini" id="posCount"></div>
+        <div class="pgrid" id="posGrid"></div>
+        <div style="height:10px"></div>
+        <button class="btn-2 hidden" id="posMore" type="button">عرض المزيد</button>
       </div>
 
       <div class="card">
@@ -366,8 +434,15 @@ table.pr td.c{text-align:center}
           <div class="tot-row big"><span>الصافي</span><span id="tNet">0</span></div>
         </div>
 
-        <label for="posCustomer">اسم العميل (اختياري)</label>
+        <label for="posParty">العميل (لو البيع آجل لازم تختاره)</label>
+        <select id="posParty"><option value="">— عميل عابر —</option></select>
+        <label for="posCustomer">أو اكتب اسم العميل (اختياري)</label>
         <input id="posCustomer" type="text" maxlength="60" placeholder="مثال: أ/ محمد">
+        <label for="posPaid">المدفوع دلوقتي</label>
+        <input id="posPaid" type="text" inputmode="decimal" placeholder="سيبه فاضي = دفع الكل">
+        <div class="tot-row" id="posDueRow" style="display:none">
+          <span>الباقي على العميل</span><span id="posDue" style="font-weight:800;color:var(--red)">0</span>
+        </div>
         <label for="posNotes">ملاحظة (اختياري)</label>
         <input id="posNotes" type="text" maxlength="160">
 
@@ -401,6 +476,275 @@ table.pr td.c{text-align:center}
 
       <div class="card">
         <div id="invoicesList"><div class="empty">بحمّل…</div></div>
+      </div>
+    </section>
+
+    <!-- ── الخزنة ── -->
+    <section id="tab-cash" class="tabpane hidden">
+      <div class="card">
+        <div class="box-card drawer">
+          <div class="bk">💵 درج الكاشير</div>
+          <div class="bv" id="cashDrawer">—</div>
+          <div class="bn" id="cashDrawerNote">اللي المفروض موجود في الدرج دلوقتي</div>
+        </div>
+        <div class="box-card main admin-only">
+          <div class="bk">🏦 الحساب العام</div>
+          <div class="bv" id="cashMain">—</div>
+          <div class="bn">اللي المسؤول استلمه ولسه ما اتصرفش</div>
+        </div>
+        <div class="stat admin-only">
+          <div class="k">إجمالي الكاش</div>
+          <div class="v" id="cashTotal">—</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>📅 النهاردة</h2>
+        <div class="stat-grid">
+          <div class="stat"><div class="k">مبيعات</div><div class="v" id="cashTSales">—</div></div>
+          <div class="stat"><div class="k">مرتجعات</div><div class="v" id="cashTRet">—</div></div>
+          <div class="stat"><div class="k">اتسلّم</div><div class="v" id="cashTHand">—</div></div>
+        </div>
+      </div>
+
+      <div class="card admin-only">
+        <h2>💰 حركات المسؤول</h2>
+        <p class="desc">الفلوس بتتحرك: زبون ← درج الكاشير ← الحساب العام ← مصروف.</p>
+        <button class="btn" id="btnCloseDay" type="button">🔒 تقفيل اليوم (استلام كل الدرج)</button>
+        <div style="height:8px"></div>
+        <button class="btn-2" id="btnHandover" type="button">📥 استلام مبلغ من الدرج</button>
+        <div style="height:8px"></div>
+        <div class="filters" style="margin-top:0">
+          <button class="chip" id="btnCashIn" type="button" style="flex:1">➕ إيداع</button>
+          <button class="chip" id="btnCashOut" type="button" style="flex:1">➖ سحب</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>📜 سجل حركة الفلوس</h2>
+        <div class="filters" style="margin-top:0">
+          <button type="button" class="chip on" id="chipCashToday">النهاردة</button>
+          <button type="button" class="chip" id="chipCashAll">الكل</button>
+        </div>
+        <div style="height:10px"></div>
+        <div id="cashList"><div class="empty">بحمّل…</div></div>
+        <div style="height:10px"></div>
+        <button class="btn-2" id="btnReloadCash" type="button">🔄 تحديث</button>
+      </div>
+    </section>
+
+    <!-- ── المشتريات ── -->
+    <section id="tab-buy" class="tabpane hidden">
+      <div class="subtabs" id="buySubs">
+        <button type="button" data-bsub="new" class="on">فاتورة شراء</button>
+        <button type="button" data-bsub="log">سجل المشتريات</button>
+        <button type="button" data-bsub="party">موردين وعملاء</button>
+      </div>
+
+      <!-- فاتورة شراء جديدة -->
+      <div id="bsub-new">
+        <div class="card">
+          <h2>📦 فاتورة شراء جديدة</h2>
+          <p class="desc">بتزوّد المخزون، وبتحدّث سعر شراء الصنف، وبتخصم من <b>الحساب العام</b>.</p>
+          <label for="buySupplier" style="margin-top:0">المورد</label>
+          <select id="buySupplier"><option value="">— من غير مورد —</option></select>
+          <label for="buySearch">دوّر على الصنف</label>
+          <input id="buySearch" type="search" placeholder="اكتب اسم الصنف أو الكود…" autocomplete="off">
+          <div class="pos-res" id="buyRes"></div>
+        </div>
+
+        <div class="card">
+          <h2>🧾 بنود الفاتورة <span id="buyCount" class="row-sub"></span></h2>
+          <div id="buyCart"><div class="empty">لسه مضفتش أصناف.</div></div>
+          <div class="totals">
+            <div class="tot-row"><span>الإجمالي</span><span id="bSub">0</span></div>
+            <div class="tot-row" style="align-items:center">
+              <span>خصم</span>
+              <input id="bDisc" type="text" inputmode="decimal" value="0" style="width:120px;min-height:42px;text-align:center">
+            </div>
+            <div class="tot-row big"><span>المطلوب دفعه</span><span id="bNet">0</span></div>
+          </div>
+          <div class="stat" style="margin-top:12px">
+            <div class="k">الموجود في الحساب العام</div>
+            <div class="v" id="buyMain">—</div>
+          </div>
+          <label for="buyPaid">المدفوع دلوقتي</label>
+          <input id="buyPaid" type="text" inputmode="decimal" placeholder="سيبه فاضي = دفع الكل">
+          <div class="tot-row" id="buyDueRow" style="display:none">
+            <span>الباقي للمورد</span><span id="buyDue" style="font-weight:800;color:var(--red)">0</span>
+          </div>
+          <label for="buyNotes">ملاحظة (اختياري)</label>
+          <input id="buyNotes" type="text" maxlength="160">
+          <div style="height:16px"></div>
+          <button class="btn" id="btnSaveBuy" type="button">💾 حفظ فاتورة الشراء</button>
+          <div style="height:8px"></div>
+          <button class="btn-2" id="btnClearBuy" type="button">مسح الفاتورة</button>
+        </div>
+      </div>
+
+      <!-- سجل المشتريات -->
+      <div id="bsub-log" class="hidden">
+        <div class="card">
+          <div class="stat-grid">
+            <div class="stat"><div class="k">عدد الفواتير</div><div class="v" id="buyCnt">—</div></div>
+            <div class="stat"><div class="k">إجمالي المشتريات</div><div class="v" id="buyTot">—</div></div>
+          </div>
+          <div style="height:10px"></div>
+          <button class="btn-2" id="btnReloadBuy" type="button">🔄 تحديث</button>
+        </div>
+        <div class="card"><div id="buyList"><div class="empty">بحمّل…</div></div></div>
+      </div>
+
+      <!-- موردين وعملاء -->
+      <div id="bsub-party" class="hidden">
+        <div class="card">
+          <h2>👥 الموردين والعملاء</h2>
+          <button class="btn" id="btnAddParty" type="button">+ إضافة</button>
+          <div style="height:12px"></div>
+          <div class="filters" style="margin-top:0">
+            <button type="button" class="chip on" id="chipSup">موردين</button>
+            <button type="button" class="chip" id="chipCus">عملاء</button>
+          </div>
+          <div style="height:12px"></div>
+          <div class="list" id="partyList"><div class="empty">بحمّل…</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── الحسابات ── -->
+    <section id="tab-acct" class="tabpane hidden">
+      <div class="subtabs" id="acctSubs">
+        <button type="button" data-asub="debt" class="on admin-only">المديونيات</button>
+        <button type="button" data-asub="vouch">السندات</button>
+        <button type="button" data-asub="stmt">كشف حساب</button>
+      </div>
+
+      <div id="asub-debt" class="admin-only">
+        <div class="card">
+          <div class="stat-grid">
+            <div class="stat"><div class="k">العملاء عليهم</div><div class="v" id="debtCus">—</div></div>
+            <div class="stat"><div class="k">إحنا علينا للموردين</div><div class="v" id="debtSup">—</div></div>
+          </div>
+          <div style="height:10px"></div>
+          <button class="btn-2" id="btnReloadDebt" type="button">🔄 تحديث</button>
+        </div>
+        <div class="card"><div id="debtList"><div class="empty">بحمّل…</div></div></div>
+      </div>
+
+      <div id="asub-vouch" class="hidden">
+        <div class="card">
+          <h2>🧾 سندات القبض والصرف</h2>
+          <p class="desc">سند قبض = العميل دفع من مديونيته (الفلوس تدخل الدرج).<br>
+             سند صرف = إحنا دفعنا للمورد (الفلوس تخرج من الحساب العام).</p>
+          <button class="btn" id="btnVouchIn" type="button">➕ سند قبض من عميل</button>
+          <div style="height:8px"></div>
+          <button class="btn-2 admin-only" id="btnVouchOut" type="button">➖ سند صرف لمورد</button>
+        </div>
+        <div class="card">
+          <div id="vouchList"><div class="empty">بحمّل…</div></div>
+          <div style="height:10px"></div>
+          <button class="btn-2" id="btnReloadVouch" type="button">🔄 تحديث</button>
+        </div>
+      </div>
+
+      <div id="asub-stmt" class="hidden">
+        <div class="card">
+          <h2>📄 كشف حساب</h2>
+          <label for="stmtParty" style="margin-top:0">اختار الطرف</label>
+          <select id="stmtParty"><option value="">— اختار —</option></select>
+          <div style="height:10px"></div>
+          <div class="stat"><div class="k">الرصيد الحالي</div><div class="v" id="stmtBal">—</div></div>
+        </div>
+        <div class="card"><div id="stmtRows"><div class="empty">اختار طرف عشان تشوف كشف حسابه.</div></div></div>
+      </div>
+    </section>
+
+    <!-- ── المصاريف والأرباح ── -->
+    <section id="tab-exp" class="tabpane hidden">
+      <div class="subtabs" id="expSubs">
+        <button type="button" data-esub="profit" class="on">الأرباح</button>
+        <button type="button" data-esub="list">المصاريف</button>
+        <button type="button" data-esub="cats">البنود</button>
+      </div>
+
+      <div id="esub-profit">
+        <div class="card">
+          <h2>📊 تقرير الأرباح</h2>
+          <p class="desc">الربح محسوب على <b>التحصيل</b>: كل جنيه بيتقبض بيتحسب معاه نصيبه من تكلفة البضاعة.</p>
+          <label for="pfPeriod" style="margin-top:0">الفترة</label>
+          <select id="pfPeriod">
+            <option value="month">الشهر ده</option>
+            <option value="today">النهارده</option>
+            <option value="prev">الشهر اللي فات</option>
+            <option value="pickMonth">شهر معيّن</option>
+            <option value="pickYear">سنة معيّنة</option>
+            <option value="all">من أول السيستم</option>
+          </select>
+          <div id="pfPickWrap" class="hidden">
+            <div class="pgrid">
+              <div id="pfMonthWrap"><label for="pfMonth">الشهر</label><select id="pfMonth"></select></div>
+              <div><label for="pfYear">السنة</label><select id="pfYear"></select></div>
+            </div>
+          </div>
+          <div style="height:12px"></div>
+          <button class="btn" id="btnProfit" type="button">اعرض التقرير</button>
+        </div>
+        <div class="card" id="pfCard">
+          <div id="pfBody"><div class="empty">اختار الفترة واضغط «اعرض التقرير».</div></div>
+        </div>
+      </div>
+
+      <div id="esub-list" class="hidden">
+        <div class="card">
+          <h2>💸 المصاريف</h2>
+          <p class="desc">المصروف بيخرج من <b>الحساب العام</b> — مش من درج الكاشير.</p>
+          <button class="btn" id="btnAddExp" type="button">➕ تسجيل مصروف</button>
+        </div>
+        <div class="card">
+          <label for="expFilterCat" style="margin-top:0">فلتر بالبند</label>
+          <select id="expFilterCat"><option value="">— كل البنود —</option></select>
+          <div style="height:10px"></div>
+          <div class="stat"><div class="k">إجمالي المعروض</div><div class="v" id="expTotal">—</div></div>
+          <div style="height:10px"></div>
+          <div id="expList"><div class="empty">بحمّل…</div></div>
+          <div style="height:10px"></div>
+          <button class="btn-2" id="btnReloadExp" type="button">🔄 تحديث</button>
+        </div>
+      </div>
+
+      <div id="esub-cats" class="hidden">
+        <div class="card">
+          <h2>🏷️ بنود المصاريف</h2>
+          <p class="desc">البنود دي اللي بتختار منها وقت تسجيل المصروف، وعليها بيتجمّع التقرير.</p>
+          <button class="btn" id="btnAddExpCat" type="button">➕ بند جديد</button>
+        </div>
+        <div class="card"><div id="expCatList"><div class="empty">بحمّل…</div></div></div>
+      </div>
+    </section>
+
+    <!-- ── الشركاء ── -->
+    <section id="tab-ptnr" class="tabpane hidden">
+      <div class="card">
+        <h2>🤝 الشركاء</h2>
+        <p class="desc">رصيد الشريك = (اللي حطه + نصيبه من صافي الربح) − (اللي سحبه).
+           فلوس الشريك <b>رأس مال</b> — مابتدخلش في حسبة الربح.</p>
+        <div class="stat-grid">
+          <div class="stat"><div class="k">رأس المال المدفوع</div><div class="v" id="ptCapital">—</div></div>
+          <div class="stat"><div class="k">المسحوب</div><div class="v" id="ptDrawn">—</div></div>
+        </div>
+        <div class="stat" style="margin-top:10px"><div class="k">صافي الربح (من أول السيستم)</div><div class="v" id="ptNet">—</div></div>
+        <div id="ptWarn" class="hidden" style="margin-top:10px"></div>
+        <div style="height:12px"></div>
+        <button class="btn" id="btnAddPartner" type="button">➕ شريك جديد</button>
+      </div>
+
+      <div class="card"><div id="ptList"><div class="empty">بحمّل…</div></div></div>
+
+      <div class="card">
+        <h2>📜 آخر الحركات</h2>
+        <div id="ptMoves"><div class="empty">بحمّل…</div></div>
+        <div style="height:10px"></div>
+        <button class="btn-2" id="btnReloadPt" type="button">🔄 تحديث</button>
       </div>
     </section>
 
@@ -505,7 +849,6 @@ table.pr td.c{text-align:center}
 // شكله كده: https://script.google.com/macros/s/AKfycb..../exec
 const API_URL = 'https://script.google.com/macros/s/AKfycbyqrsh_MVFDgi3QEs61BkSWdCCv6epyiFKggrUjKgWTzdF6g6idqNR3gaXp6QuNERHK/exec';
 
-
 /* ═══════════════════════════════════════════════════════════════
    ٢) أدوات عامة
    ═══════════════════════════════════════════════════════════════ */
@@ -517,6 +860,33 @@ let TOKEN    = null;
 let ME       = null;
 let SETTINGS = null;
 let SERVER_DATE = '';   // تاريخ السيرفر (القاهرة) — مش تاريخ الموبايل
+
+/* ── قفل تلقائي عند السكون ──
+   لو محدش لمس الشاشة المدة دي، السيستم بيقفل ويطلب الباسورد تاني.
+   مفيد لو الكاشير ساب المحل والشاشة مفتوحة. */
+const IDLE_MINUTES = 30;
+let lastTouch = Date.now();
+let idleTimer = null;
+
+function markActivity() { lastTouch = Date.now(); }
+
+function startIdleWatch() {
+  if (idleTimer) clearInterval(idleTimer);
+  lastTouch = Date.now();
+  idleTimer = setInterval(function () {
+    if (!ME) return;
+    if (Date.now() - lastTouch < IDLE_MINUTES * 60 * 1000) return;
+    clearInterval(idleTimer); idleTimer = null;
+    forceLogout('السيستم قفل لوحده بعد ' + IDLE_MINUTES + ' دقيقة من غير استخدام. سجّل دخول تاني.');
+  }, 20000);
+}
+
+['pointerdown', 'keydown', 'touchstart', 'wheel'].forEach(function (ev) {
+  window.addEventListener(ev, markActivity, { passive: true });
+});
+document.addEventListener('visibilitychange', function () {
+  if (!document.hidden) markActivity();
+});
 
 /* --- توست --- */
 let toastTimer = {};
@@ -713,6 +1083,7 @@ function clearToken() {
 function forceLogout(msg) {
   clearToken();
   ME = null;
+  if (idleTimer) { clearInterval(idleTimer); idleTimer = null; }
   SETTINGS = null;
   closeAllModals();
   // منمسح بيانات المستخدم اللي فات من الشاشة
@@ -725,6 +1096,15 @@ function forceLogout(msg) {
   $('printArea').innerHTML = '';
   $('invSearchBox').value = '';
   INVOICES = []; invoicesLoaded = false; invQ = '';
+  $('cashList').innerHTML = ''; CASH = null; cashLoaded = false;
+  $('partyList').innerHTML = ''; $('buyList').innerHTML = '';
+  PARTIES = []; partiesLoaded = false; partiesHaveBal = false; PURCHASES = []; purchasesLoaded = false;
+  EXPENSES = []; EXP_CATS = []; expLoaded = false;
+  PARTNERS = []; PMOVES = []; PSUM = null; partnersLoaded = false; DASH = null; dashLoaded = false;
+  DEBTS = null; debtsLoaded = false; VOUCHERS = []; vouchLoaded = false;
+  $('debtList').innerHTML = ''; $('vouchList').innerHTML = ''; $('stmtRows').innerHTML = '';
+  $('expList').innerHTML = ''; $('expCatList').innerHTML = '';
+  $('pfBody').innerHTML = '<div class="empty">اختار الفترة واضغط «اعرض التقرير».</div>';
   // مابنمسحش الفاتورة اللي بتتكتب — محفوظة في المتصفح وهترجع بعد الدخول
   invF.q = ''; invF.cat = ''; invF.low = false; invF.off = false;
   $('chipLow').classList.remove('on');
@@ -739,7 +1119,12 @@ function forceLogout(msg) {
   $('lgPass').value = '';
   $('screenApp').classList.add('hidden');
   $('screenLogin').classList.remove('hidden');
-  if (msg) toast(msg, 'warn');
+  if (msg) {
+    toast(msg, 'warn');
+    // الرسالة تفضل ظاهرة على شاشة الدخول — التوست بيختفي بسرعة
+    $('setupWarn').classList.remove('hidden');
+    $('setupWarn').innerHTML = '<b>⚠️ اتقفل الدخول</b>' + esc(msg);
+  }
 }
 
 $('loginForm').addEventListener('submit', async function (e) {
@@ -763,8 +1148,12 @@ $('loginForm').addEventListener('submit', async function (e) {
     SETTINGS = r.settings;
     SERVER_DATE = r.serverDate || '';
     $('lgPass').value = '';
+    $('setupWarn').classList.add('hidden');
     enterApp();
     toast('أهلاً ' + ME.fullName, 'ok');
+    if (r.kickedOthers > 0) {
+      toast('الحساب ده كان مفتوح على جهاز تاني — اتقفل هناك دلوقتي.', 'warn');
+    }
   } catch (err) {
     toast(err.message, 'err');
   } finally {
@@ -791,6 +1180,11 @@ const TABS = [
   { id: 'pos',      label: 'البيع',      admin: false },
   { id: 'invoices', label: 'الفواتير',   admin: false },
   { id: 'stock',    label: 'المخزون',    admin: false },
+  { id: 'cash',     label: 'الخزنة',     admin: false },
+  { id: 'buy',      label: 'المشتريات',  admin: true  },
+  { id: 'acct',     label: 'الحسابات',   admin: false },
+  { id: 'exp',      label: 'المصاريف',   admin: true  },
+  { id: 'ptnr',     label: 'الشركاء',    admin: true  },
   { id: 'settings', label: 'الإعدادات',  admin: true  },
   { id: 'users',    label: 'المستخدمين', admin: true  },
   { id: 'me',       label: 'حسابي',      admin: false }
@@ -821,11 +1215,27 @@ function showTab(id) {
   if (id === 'users' && ME.role === 'admin') { loadUsers(); loadLogs(); }
   if (id === 'stock') loadInventory(false);
   if (id === 'pos') {
-    loadInventory(false);
+    loadInventory(false).then(function () { renderPosCats(); renderPosGrid(); });
     renderCart();
-    setTimeout(function () { $('posSearch').focus(); }, 100);
+    renderPosCats();
+    renderPosGrid();
   }
   if (id === 'invoices') loadInvoices(false);
+  if (id === 'cash') loadCash(false);
+  if (id === 'buy') {
+    loadInventory(false);
+    loadParties(false, true);
+    loadCash(false).then(updateBuyTotals);
+    renderBuyCart();
+  }
+  if (id === 'acct') {
+    loadParties(false).then(fillPartySelects);
+    if (ME.role === 'admin') loadDebts(false); else loadVouchers(false);
+  }
+  if (id === 'pos') loadParties(false, true).then(fillPartySelects);
+  if (id === 'exp' && ME.role === 'admin') { fillPeriodSelects(); loadExpenses(false); }
+  if (id === 'ptnr' && ME.role === 'admin') loadPartners(false);
+  if (id === 'home') loadDash(false);
 }
 
 function enterApp() {
@@ -837,8 +1247,6 @@ function enterApp() {
   $('hdUser').textContent  = ME.fullName + ' · ' + ME.roleText;
   $('homeName').textContent = ME.fullName;
   $('homeRole').textContent = 'إنت داخل بصلاحية: ' + ME.roleText;
-  $('stStore').textContent = storeName;
-  $('stRole').textContent  = ME.roleText;
   $('meUser').textContent  = ME.username;
   $('meName').textContent  = ME.fullName;
   $('meRole').textContent  = ME.roleText;
@@ -858,9 +1266,16 @@ function enterApp() {
   invoicesLoaded = false;
   invFilterToday = true;
   invQ = '';
+  CASH = null; cashLoaded = false; cashToday = true;
+  PARTIES = []; partiesLoaded = false; partiesHaveBal = false; PURCHASES = []; purchasesLoaded = false;
+  EXPENSES = []; EXP_CATS = []; expLoaded = false;
+  PARTNERS = []; PMOVES = []; PSUM = null; partnersLoaded = false; DASH = null; dashLoaded = false;
+  DEBTS = null; debtsLoaded = false; VOUCHERS = []; vouchLoaded = false;
   buildTabs();
   showTab('home');
+  startIdleWatch();
   loadCartLocal();
+  if (ME.role === 'admin') loadBuyLocal();
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -900,7 +1315,6 @@ $('settingsForm').addEventListener('submit', async function (e) {
     SETTINGS = r.settings;
     fillSettingsForm();
     $('hdStore').textContent = SETTINGS.storeName || 'المحل';
-    $('stStore').textContent = SETTINGS.storeName || 'المحل';
     toast('اتحفظت بيانات المحل.', 'ok');
   } catch (err) {
     toast(err.message, 'err');
@@ -1195,6 +1609,7 @@ async function loadInventory(force) {
     fillCatSelect();
     renderCats();
     renderInv(true);
+    if (!$('tab-pos').classList.contains('hidden')) { renderPosCats(); renderPosGrid(); }
     return true;
   } catch (err) {
     $('invList').innerHTML = '<div class="empty">' + esc(err.message) + '</div>';
@@ -1214,6 +1629,7 @@ async function refreshInvQuiet() {
     fillCatSelect();
     renderCats();
     renderInv(false);
+    if (!$('tab-pos').classList.contains('hidden')) { renderPosCats(); renderPosGrid(); }
   } catch (e) { /* التحديث الصامت لو فشل مش هيوقف حاجة */ }
 }
 
@@ -1657,7 +2073,8 @@ function saveCartLocal() {
   try {
     localStorage.setItem(CART_KEY, JSON.stringify({
       cart: CART, ref: CART_REF,
-      disc: $('tDisc').value, cust: $('posCustomer').value, notes: $('posNotes').value
+      disc: $('tDisc').value, cust: $('posCustomer').value, notes: $('posNotes').value,
+      paid: $('posPaid').value, party: $('posParty').value
     }));
   } catch (e) {}
 }
@@ -1672,6 +2089,8 @@ function loadCartLocal() {
     $('tDisc').value = d.disc || '0';
     $('posCustomer').value = d.cust || '';
     $('posNotes').value = d.notes || '';
+    $('posPaid').value = d.paid || '';
+    if (d.party) setTimeout(function () { $('posParty').value = d.party; }, 300);
     renderCart();
     toast('رجّعنالك الفاتورة اللي كنت بتكتبها.', 'warn');
   } catch (e) {}
@@ -1692,30 +2111,68 @@ function cartTotals() {
   return { sub: Math.round(sub * 100) / 100, disc: disc, net: Math.round((sub - d) * 100) / 100 };
 }
 
-function renderPosResults() {
+let posCat = '';
+let posShown = 60;
+const POS_PAGE = 60;
+
+function renderPosCats() {
+  const host = $('posCats');
+  const cats = [''].concat(INV.categories || []);
+  host.innerHTML = '';
+  cats.forEach(function (c) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = c || 'الكل';
+    b.className = (posCat === c) ? 'on' : '';
+    b.onclick = function () { posCat = c; posShown = POS_PAGE; renderPosCats(); renderPosGrid(); };
+    host.appendChild(b);
+  });
+}
+
+function posFiltered() {
   const q = normAr($('posSearch').value);
-  const host = $('posRes');
-  if (!q) { host.innerHTML = ''; return; }
-  if (!INV.products.length) { host.innerHTML = '<div class="empty">حمّل المخزون الأول من تاب المخزون.</div>'; return; }
-
-  const words = q.split(' ');
-  const hits = INV.products.filter(function (p) {
+  const words = q ? q.split(' ') : [];
+  return INV.products.filter(function (p) {
     if (!p.active) return false;
-    const hay = p._hay || '';
-    for (let i = 0; i < words.length; i++) if (hay.indexOf(words[i]) === -1) return false;
+    if (posCat && p.category !== posCat) return false;
+    if (words.length) {
+      const hay = p._hay || '';
+      for (let i = 0; i < words.length; i++) if (hay.indexOf(words[i]) === -1) return false;
+    }
     return true;
-  }).slice(0, 20);
+  });
+}
 
-  if (!hits.length) { host.innerHTML = '<div class="empty">مفيش صنف بالاسم ده.</div>'; return; }
+/* كروت الأصناف — تضغط على الكارت فيتضاف للفاتورة */
+function renderPosGrid() {
+  const host = $('posGrid');
+  if (!INV.products.length) {
+    host.innerHTML = '<div class="empty">بحمّل الأصناف…</div>';
+    $('posCount').textContent = '';
+    $('posMore').classList.add('hidden');
+    return;
+  }
+
+  const list = posFiltered();
+  const slice = list.slice(0, posShown);
+  $('posCount').textContent = 'ظاهر ' + slice.length + ' من ' + list.length + ' صنف';
+  $('posMore').classList.toggle('hidden', slice.length >= list.length);
+
+  if (!list.length) {
+    host.innerHTML = '<div class="empty">مفيش صنف بالمواصفات دي.</div>';
+    return;
+  }
 
   host.innerHTML = '';
-  hits.forEach(function (p) {
+  slice.forEach(function (p) {
+    const inCart = CART.filter(function (l) { return l.id === p.id; })[0];
+    const qCls = p.qty <= 0 ? 'zero' : ((p.minQty > 0 && p.qty <= p.minQty) ? 'low' : '');
     const el = document.createElement('div');
-    el.className = 'hit';
+    el.className = 'pcard' + (inCart ? ' in' : '') + (p.qty <= 0 ? ' out' : '');
     el.innerHTML =
-      '<div><div class="h-name">' + esc(p.name) + '</div>' +
-      '<div class="h-sub">كود ' + esc(p.sku) + ' · متاح ' + esc(fmtNum(p.qty)) + ' ' + esc(p.unit) + '</div></div>' +
-      '<div class="line-tot">+</div>';
+      (inCart ? '<div class="incart">' + esc(fmtNum(inCart.qty || 0)) + '</div>' : '') +
+      '<div class="pn">' + esc(p.name) + '</div>' +
+      '<div class="pq ' + qCls + '">' + esc(fmtNum(p.qty)) + ' ' + esc(p.unit) + '</div>';
     el.onclick = function () { addToCart(p); };
     host.appendChild(el);
   });
@@ -1730,11 +2187,9 @@ function addToCart(p) {
   } else {
     CART.push({ id: p.id, name: p.name, sku: p.sku, unit: p.unit, stock: p.qty, qty: 1, price: '' });
   }
-  $('posSearch').value = '';
-  $('posRes').innerHTML = '';
   renderCart();
+  renderPosGrid();
   saveCartLocal();
-  $('posSearch').focus();
 }
 
 function renderCart() {
@@ -1786,6 +2241,7 @@ function renderCart() {
         const at = CART.indexOf(l);
         if (at !== -1) CART.splice(at, 1);
         renderCart();
+        renderPosGrid();
         saveCartLocal();
       };
       host.appendChild(el);
@@ -1817,6 +2273,12 @@ function updateTotalsOnly() {
   const t = cartTotals();
   $('tSub').textContent = money(t.sub);
   $('tNet').textContent = money(t.net);
+
+  const raw = $('posPaid').value.trim();
+  const paid = raw === '' ? t.net : parseNum(raw);
+  const due = (paid === null) ? 0 : Math.round((t.net - paid) * 100) / 100;
+  $('posDueRow').style.display = (due > 0) ? '' : 'none';
+  $('posDue').textContent = money(due > 0 ? due : 0);
 }
 
 function clearCart(silent) {
@@ -1825,10 +2287,16 @@ function clearCart(silent) {
   dropCartLocal();
   $('tDisc').value = '0';
   $('posCustomer').value = '';
+  $('posPaid').value = '';
+  $('posParty').value = '';
+  $('posDueRow').style.display = 'none';
   $('posNotes').value = '';
   $('posSearch').value = '';
-  $('posRes').innerHTML = '';
+  posCat = '';
+  posShown = POS_PAGE;
   renderCart();
+  renderPosCats();
+  renderPosGrid();
   if (!silent) toast('اتمسحت الفاتورة.', 'ok');
 }
 
@@ -1847,6 +2315,17 @@ async function saveInvoice() {
   }
   const t = cartTotals();
   if (t.disc === null) { toast('الخصم مش رقم مفهوم.', 'err'); return; }
+
+  const rawPaid = $('posPaid').value.trim();
+  const paid = rawPaid === '' ? t.net : parseNum(rawPaid);
+  if (paid === null) { toast('المدفوع مش رقم مفهوم.', 'err'); return; }
+  if (paid < 0) { toast('المدفوع مينفعش يكون بالسالب.', 'err'); return; }
+  if (paid > t.net) { toast('المدفوع أكبر من إجمالي الفاتورة.', 'err'); return; }
+  const partyId = $('posParty').value;
+  if (paid < t.net && !partyId) {
+    toast('البيع بالآجل لازم تختار العميل من القايمة الأول.', 'err');
+    return;
+  }
   if (t.disc < 0) { toast('الخصم مينفعش يكون بالسالب.', 'err'); return; }
   if (t.disc > t.sub) { toast('الخصم أكبر من إجمالي الفاتورة.', 'err'); return; }
 
@@ -1869,6 +2348,8 @@ async function saveInvoice() {
       customer: $('posCustomer').value.trim(),
       notes: $('posNotes').value.trim(),
       allowNegative: allowNegative,
+      paid: paid,
+      partyId: partyId,
       clientRef: CART_REF
     }, { timeout: 60000 });
 
@@ -1876,6 +2357,8 @@ async function saveInvoice() {
     invLoaded = false;              // المخزون اتغيّر
     loadInventory(true);
     invoicesLoaded = false;
+    cashLoaded = false; dashLoaded = false;
+    debtsLoaded = false; partiesLoaded = false;
     openSavedModal(r.invoice);
     toast(r.message, r.duplicate ? 'warn' : 'ok');
   } catch (e) {
@@ -1908,6 +2391,7 @@ function openSavedModal(inv) {
 function printInvoice(inv, st) {
   st = st || SETTINGS || {};
   const isRet = inv.type === 'مرتجع';
+  const isBuy = inv.type === 'شراء';
   const cur = st.currency || 'ج.م';
 
   const rows = (inv.lines || []).map(function (l, i) {
@@ -1925,13 +2409,13 @@ function printInvoice(inv, st) {
       '<div><div class="pr-store">' + esc(st.storeName || 'المحل') + '</div>' +
       (st.phone ? '<div class="pr-sub">ت: ' + esc(st.phone) + '</div>' : '') +
       (st.address ? '<div class="pr-sub">' + esc(st.address) + '</div>' : '') + '</div>' +
-      '<div class="pr-title">' + (isRet ? 'فاتورة مرتجع' : 'فاتورة بيع') + '</div>' +
+      '<div class="pr-title">' + (isBuy ? 'فاتورة شراء' : (isRet ? 'فاتورة مرتجع' : 'فاتورة بيع')) + '</div>' +
     '</div>' +
     '<div class="pr-meta">' +
       '<div><b>رقم:</b> ' + ltr(inv.number) + '</div>' +
       '<div><b>التاريخ:</b> ' + ltr(inv.time) + '</div>' +
-      (inv.customer ? '<div><b>العميل:</b> ' + esc(inv.customer) + '</div>' : '') +
-      '<div><b>البائع:</b> ' + esc(inv.userName || inv.user || '') + '</div>' +
+      (inv.customer ? '<div><b>' + (isBuy ? 'المورد' : 'العميل') + ':</b> ' + esc(inv.customer) + '</div>' : '') +
+      '<div><b>' + (isBuy ? 'سجّلها' : 'البائع') + ':</b> ' + esc(inv.userName || inv.user || '') + '</div>' +
       (inv.ref ? '<div><b>على فاتورة:</b> ' + ltr(inv.ref) + '</div>' : '') +
     '</div>' +
     '<table class="pr"><tr><th style="width:34px">م</th><th>الصنف</th><th style="width:70px">الكمية</th>' +
@@ -1939,7 +2423,7 @@ function printInvoice(inv, st) {
     '<div class="pr-tot">' +
       '<div class="row"><span>الإجمالي</span><span>' + esc(fmtNum(inv.subtotal)) + ' ' + esc(cur) + '</span></div>' +
       (inv.discount ? '<div class="row"><span>الخصم</span><span>' + esc(fmtNum(inv.discount)) + ' ' + esc(cur) + '</span></div>' : '') +
-      '<div class="row big"><span>' + (isRet ? 'المرتجع' : 'المطلوب') + '</span><span>' +
+      '<div class="row big"><span>' + (isBuy ? 'المدفوع' : (isRet ? 'المرتجع' : 'المطلوب')) + '</span><span>' +
         esc(fmtNum(inv.total)) + ' ' + esc(cur) + '</span></div>' +
     '</div>' +
     (inv.notes ? '<div class="pr-foot" style="border:0;text-align:right">ملاحظات: ' + esc(inv.notes) + '</div>' : '') +
@@ -2130,7 +2614,7 @@ function openReturnModal(inv, returned) {
       }, { timeout: 60000 });
       closeModal(bg);
       toast(r.message, 'ok');
-      invoicesLoaded = false; invLoaded = false;
+      invoicesLoaded = false; invLoaded = false; cashLoaded = false; dashLoaded = false;
       await loadInvoices(true);
       loadInventory(true);
       openSavedModal(r.invoice);
@@ -2159,9 +2643,10 @@ function openCancelModal(inv) {
       const r = await api('cancelInvoice', { number: inv.number, reason: reason }, { timeout: 60000 });
       closeModal(bg);
       toast(r.message, 'ok');
-      invoicesLoaded = false; invLoaded = false;
+      invoicesLoaded = false; invLoaded = false; cashLoaded = false; purchasesLoaded = false; dashLoaded = false;
       await loadInvoices(true);
       loadInventory(true);
+      loadCash(true);
     } catch (e) {
       toast(e.message, 'err');
       btnBusy(btn, false);
@@ -2172,10 +2657,13 @@ function openCancelModal(inv) {
 /* ── ربط عناصر البيع والفواتير ── */
 $('posSearch').addEventListener('input', function () {
   if (posTimer) clearTimeout(posTimer);
-  posTimer = setTimeout(renderPosResults, 130);
+  posTimer = setTimeout(function () { posShown = POS_PAGE; renderPosGrid(); }, 130);
 });
+$('posMore').addEventListener('click', function () { posShown += POS_PAGE; renderPosGrid(); });
 $('tDisc').addEventListener('input', function () { updateTotalsOnly(); saveCartLocal(); });
 $('posCustomer').addEventListener('input', saveCartLocal);
+$('posPaid').addEventListener('input', function () { updateTotalsOnly(); saveCartLocal(); });
+$('posParty').addEventListener('change', saveCartLocal);
 $('posNotes').addEventListener('input', saveCartLocal);
 $('btnSaveInv').addEventListener('click', saveInvoice);
 $('btnClearCart').addEventListener('click', async function () {
@@ -2204,6 +2692,1538 @@ $('btnReloadInv').addEventListener('click', async function () {
   const okDone = await loadInvoices(true);
   btnBusy(btn, false);
   if (okDone) toast('اتحدّثت الفواتير.', 'ok');
+});
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ١٥) الخزنة
+   ═══════════════════════════════════════════════════════════════ */
+
+let CASH = null;
+let cashLoaded = false;
+let cashToday = true;
+
+async function loadCash(force) {
+  if (cashLoaded && !force) return true;
+  $('cashList').innerHTML = '<div class="empty">بحمّل…</div>';
+  try {
+    const r = await api('cashSummary', { day: cashToday ? todayStr() : '' }, { timeout: 60000 });
+    CASH = r;
+    cashLoaded = true;
+    if (r.serverDate) SERVER_DATE = r.serverDate;
+
+    $('cashDrawer').textContent = money(r.drawer);
+    $('cashDrawerNote').textContent = (r.drawerShort > 0)
+      ? ('⚠️ عجز ' + fmtNum(r.drawerShort) + ' — مرتجع اتدفع من درج كان اتسلّم')
+      : 'اللي المفروض موجود في الدرج دلوقتي';
+    $('cashMain').textContent   = (r.main === null || r.main === undefined) ? '—' : money(r.main);
+    $('cashTotal').textContent  = (r.total === null || r.total === undefined) ? '—' : money(r.total);
+    $('cashTSales').textContent = money(r.today.sales);
+    $('cashTRet').textContent   = money(r.today.returns);
+    $('cashTHand').textContent  = money(r.today.handed);
+
+    renderCashMoves();
+    return true;
+  } catch (e) {
+    $('cashList').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    return false;
+  }
+}
+
+function renderCashMoves() {
+  const host = $('cashList');
+  const moves = (CASH && CASH.moves) || [];
+  if (!moves.length) {
+    host.innerHTML = '<div class="empty">مفيش حركات' + (cashToday ? ' النهاردة' : '') + '.</div>';
+    return;
+  }
+  host.innerHTML = '';
+  const boxName = function (b) {
+    if (b === 'درج') return 'درج الكاشير';
+    if (b === 'عام') return 'الحساب العام';
+    if (b === 'بره') return 'بره السيستم';
+    return b || '؟';
+  };
+  moves.forEach(function (m) {
+    const isIn = (m.from === 'بره');       // فلوس داخلة للمحل
+    const isOut = (m.to === 'بره');        // فلوس خارجة من المحل
+    const cls = isIn ? 'cash-in' : 'cash-out';   // التسليم كمان بينقّص الدرج
+    const sign = isIn ? '+' : '−';
+    const path = 'من ' + boxName(m.from) + ' ← ' + boxName(m.to);
+
+    const el = document.createElement('div');
+    el.className = 'cash-row';
+    el.innerHTML =
+      '<div class="row-top">' +
+        '<div><div class="row-name">' + esc(m.type) + ' <span class="badge badge-move">' + esc(path) + '</span></div>' +
+        '<div class="row-sub">' + esc(m.reason) + '</div>' +
+        '<div class="row-sub">' + ltr(m.time) + ' · ' + esc(m.userName || m.user) + '</div></div>' +
+        '<div class="cash-amt ' + cls + '">' + sign + esc(money(m.amount)) + '</div>' +
+      '</div>';
+    host.appendChild(el);
+  });
+}
+
+function openHandoverModal(full) {
+  const have = (CASH && CASH.drawer) || 0;
+  if (have < 0) {
+    toast('الدرج بالسالب (' + fmtNum(have) + '). معناها مرتجع اتدفع من درج كان اتسلّم خلاص — ' +
+          'سجّل «إيداع» في الدرج بالمبلغ ده الأول.', 'err');
+    return;
+  }
+  if (have === 0) { toast('الدرج فاضي — مفيش حاجة تتسلّم.', 'warn'); return; }
+
+  const bg = openModal(
+    '<h3>' + (full ? 'تقفيل اليوم' : 'استلام من الدرج') + '</h3>' +
+    '<p class="desc">الفلوس هتتنقل من درج الكاشير للحساب العام. إجمالي الكاش مش هيتغيّر.</p>' +
+    '<div class="stat"><div class="k">اللي في الدرج دلوقتي</div><div class="v">' + esc(money(have)) + '</div></div>' +
+    '<label>المبلغ اللي استلمته</label>' +
+    '<input id="hoAmt" type="text" inputmode="decimal" value="' + esc(have) + '">' +
+    '<label>ملاحظة (اختياري)</label><input id="hoNote" type="text" maxlength="120" placeholder="مثال: تسليم آخر اليوم">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>إلغاء</button>' +
+    '<button class="btn" data-ok>تأكيد الاستلام</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const raw = bg.querySelector('#hoAmt').value.trim();
+    const v = parseNum(raw);
+    if (raw === '') { toast('اكتب المبلغ.', 'err'); return; }
+    if (v === null) { toast('المبلغ مش رقم مفهوم.', 'err'); return; }
+    if (v <= 0) { toast('المبلغ لازم يكون أكبر من صفر.', 'err'); return; }
+    // مابنمنعش من هنا: ممكن يكون في بيع جديد بعد آخر تحديث — السيرفر هو المرجع
+
+    btnBusy(btn, true, 'بيسجّل');
+    try {
+      const r = await api('cashHandover', { amount: v, note: bg.querySelector('#hoNote').value.trim() },
+                          { timeout: 60000 });
+      closeModal(bg);
+      toast(r.message, 'ok');
+      await loadCash(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+function openCashEntryModal(kind) {
+  const isIn = (kind === 'إيداع');
+  const bg = openModal(
+    '<h3>' + (isIn ? '➕ إيداع فلوس' : '➖ سحب فلوس') + '</h3>' +
+    '<p class="desc">' + (isIn ? 'فلوس داخلة من بره السيستم (رصيد افتتاحي مثلاً).'
+                                : 'فلوس خارجة من السيستم (مصروف نثري مثلاً).') + '</p>' +
+    '<label>الخزنة</label>' +
+    (isIn
+      ? '<select id="ceBox"><option value="عام">الحساب العام</option><option value="درج">درج الكاشير</option></select>'
+      : '<select id="ceBox"><option value="عام">الحساب العام</option></select>' +
+        '<p class="hint">الفلوس مابتخرجش من درج الكاشير غير بالتسليم للمسؤول.</p>') +
+    '<label>المبلغ</label><input id="ceAmt" type="text" inputmode="decimal">' +
+    '<label>السبب (إجباري)</label><input id="ceReason" type="text" maxlength="120">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>إلغاء</button>' +
+    '<button class="btn" data-ok>تسجيل</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const raw = bg.querySelector('#ceAmt').value.trim();
+    const v = parseNum(raw);
+    const reason = bg.querySelector('#ceReason').value.trim();
+    if (raw === '') { toast('اكتب المبلغ.', 'err'); return; }
+    if (v === null) { toast('المبلغ مش رقم مفهوم.', 'err'); return; }
+    if (v <= 0) { toast('المبلغ لازم يكون أكبر من صفر.', 'err'); return; }
+    if (!reason) { toast('اكتب سبب الحركة.', 'err'); return; }
+
+    btnBusy(btn, true, 'بيسجّل');
+    try {
+      const r = await api('cashEntry', {
+        kind: kind, box: bg.querySelector('#ceBox').value, amount: v, reason: reason
+      }, { timeout: 60000 });
+      closeModal(bg);
+      toast(r.message, 'ok');
+      await loadCash(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+$('btnCloseDay').addEventListener('click', function () { openHandoverModal(true); });
+$('btnHandover').addEventListener('click', function () { openHandoverModal(false); });
+$('btnCashIn').addEventListener('click', function () { openCashEntryModal('إيداع'); });
+$('btnCashOut').addEventListener('click', function () { openCashEntryModal('سحب'); });
+$('chipCashToday').addEventListener('click', function () {
+  cashToday = true; this.classList.add('on'); $('chipCashAll').classList.remove('on'); loadCash(true);
+});
+$('chipCashAll').addEventListener('click', function () {
+  cashToday = false; this.classList.add('on'); $('chipCashToday').classList.remove('on'); loadCash(true);
+});
+$('btnReloadCash').addEventListener('click', async function () {
+  const btn = $('btnReloadCash');
+  btnBusy(btn, true, 'بيحدّث');
+  const okDone = await loadCash(true);
+  btnBusy(btn, false);
+  if (okDone) toast('اتحدّثت الخزنة.', 'ok');
+});
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ١٦) المشتريات والموردين والعملاء
+   ═══════════════════════════════════════════════════════════════ */
+
+let PARTIES = [];
+let partiesLoaded = false;
+// الأرصدة بتتحسب من كل الفواتير — شاشة البيع مش محتاجاها، بتطلب الأسماء بس.
+let partiesHaveBal = false;
+let partyKind = 'مورد';
+let PCART = [];
+let PCART_REF = '';
+let buyTimer = null;
+let PURCHASES = [];
+let purchasesLoaded = false;
+const BCART_KEY = 'rss_bcart';
+
+function saveBuyLocal() {
+  try {
+    localStorage.setItem(BCART_KEY, JSON.stringify({
+      cart: PCART, ref: PCART_REF, disc: $('bDisc').value,
+      sup: $('buySupplier').value, notes: $('buyNotes').value
+    }));
+  } catch (e) {}
+}
+function loadBuyLocal() {
+  try {
+    const raw = localStorage.getItem(BCART_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (!d || !Array.isArray(d.cart) || !d.cart.length) return;
+    PCART = d.cart; PCART_REF = d.ref || '';
+    $('bDisc').value = d.disc || '0';
+    $('buyNotes').value = d.notes || '';
+    renderBuyCart();
+    if (d.sup) setTimeout(function () { $('buySupplier').value = d.sup; }, 200);
+  } catch (e) {}
+}
+function dropBuyLocal() { try { localStorage.removeItem(BCART_KEY); } catch (e) {} }
+
+async function loadParties(force, light) {
+  if (partiesLoaded && !force && (light || partiesHaveBal)) return true;
+  try {
+    const r = await api('listParties', light ? { withBalance: false } : {});
+    PARTIES = r.parties;
+    partiesLoaded = true;
+    partiesHaveBal = !light;
+    fillSupplierSelect();
+    fillPartySelects();
+    renderParties();
+    return true;
+  } catch (e) {
+    $('partyList').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    return false;
+  }
+}
+
+function fillSupplierSelect() {
+  const sel = $('buySupplier');
+  const cur = sel.value;
+  const sups = PARTIES.filter(function (p) { return p.type === 'مورد' && p.active; });
+  sel.innerHTML = '<option value="">— من غير مورد —</option>' +
+    sups.map(function (p) { return '<option value="' + esc(p.id) + '">' + esc(p.name) + '</option>'; }).join('');
+  sel.value = cur;
+}
+
+function renderParties() {
+  const host = $('partyList');
+  const list = PARTIES.filter(function (p) { return p.type === partyKind; });
+  if (!list.length) {
+    host.innerHTML = '<div class="empty">مفيش ' + (partyKind === 'مورد' ? 'موردين' : 'عملاء') + ' لسه.</div>';
+    return;
+  }
+  host.innerHTML = '';
+  list.forEach(function (p) {
+    const el = document.createElement('div');
+    el.className = 'row-item' + (p.active ? '' : ' prod-off');
+    el.innerHTML =
+      '<div class="row-top"><div>' +
+        '<div class="row-name">' + esc(p.name) + (p.active ? '' : ' <span class="badge badge-off">موقوف</span>') + '</div>' +
+        (p.phone ? '<div class="row-sub">' + ltr(p.phone) + '</div>' : '') +
+        (p.address ? '<div class="row-sub">' + esc(p.address) + '</div>' : '') +
+        (p.notes ? '<div class="row-sub">' + esc(p.notes) + '</div>' : '') +
+      '</div></div>' +
+      '<div class="row-actions">' +
+        '<button class="btn-2 btn-sm" data-edit>تعديل</button>' +
+        '<button class="btn-2 btn-sm" data-tog>' + (p.active ? 'إيقاف' : 'تفعيل') + '</button>' +
+      '</div>';
+    el.querySelector('[data-edit]').onclick = function () { openPartyModal(p); };
+    el.querySelector('[data-tog]').onclick = async function () {
+      busy(true);
+      try {
+        const r = await api('setPartyActive', { id: p.id, active: !p.active });
+        toast(r.message, 'ok');
+        await loadParties(true);
+      } catch (e) { toast(e.message, 'err'); }
+      busy(false);
+    };
+    host.appendChild(el);
+  });
+}
+
+function openPartyModal(p) {
+  const isEdit = !!p;
+  const t = isEdit ? p.type : partyKind;
+  const bg = openModal(
+    '<h3>' + (isEdit ? 'تعديل' : 'إضافة') + ' ' + esc(t) + '</h3>' +
+    '<label>النوع</label><select id="pyType">' +
+      '<option value="مورد"' + (t === 'مورد' ? ' selected' : '') + '>مورد</option>' +
+      '<option value="عميل"' + (t === 'عميل' ? ' selected' : '') + '>عميل</option></select>' +
+    '<label>الاسم</label><input id="pyName" type="text" maxlength="60" value="' + (isEdit ? esc(p.name) : '') + '">' +
+    '<label>التليفون</label><input id="pyPhone" type="text" inputmode="tel" maxlength="30" value="' + (isEdit ? esc(p.phone) : '') + '">' +
+    '<label>العنوان</label><input id="pyAddr" type="text" maxlength="120" value="' + (isEdit ? esc(p.address) : '') + '">' +
+    '<label>ملاحظات</label><input id="pyNotes" type="text" maxlength="160" value="' + (isEdit ? esc(p.notes) : '') + '">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>إلغاء</button><button class="btn" data-ok>حفظ</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const name = bg.querySelector('#pyName').value.trim();
+    if (!name) { toast('اكتب الاسم.', 'err'); return; }
+    btnBusy(btn, true, 'بيحفظ');
+    try {
+      const r = await api('saveParty', {
+        id: isEdit ? p.id : '',
+        type: bg.querySelector('#pyType').value,
+        name: name,
+        phone: bg.querySelector('#pyPhone').value.trim(),
+        address: bg.querySelector('#pyAddr').value.trim(),
+        notes: bg.querySelector('#pyNotes').value.trim()
+      });
+      closeModal(bg);
+      toast(r.message, 'ok');
+      partyKind = bg.querySelector('#pyType') ? partyKind : partyKind;
+      await loadParties(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+/* ── عربة الشراء ── */
+function buyTotals() {
+  let sub = 0;
+  PCART.forEach(function (l) { sub += (Number(l.qty) || 0) * (Number(l.cost) || 0); });
+  const raw = $('bDisc').value.trim();
+  const disc = raw === '' ? 0 : parseNum(raw);
+  const d = (disc === null) ? 0 : disc;
+  return { sub: Math.round(sub * 100) / 100, disc: disc, net: Math.round((sub - d) * 100) / 100 };
+}
+
+function renderBuyResults() {
+  const q = normAr($('buySearch').value);
+  const host = $('buyRes');
+  if (!q) { host.innerHTML = ''; return; }
+  const words = q.split(' ');
+  const hits = INV.products.filter(function (p) {
+    if (!p.active) return false;
+    const hay = p._hay || '';
+    for (let i = 0; i < words.length; i++) if (hay.indexOf(words[i]) === -1) return false;
+    return true;
+  }).slice(0, 20);
+
+  if (!hits.length) { host.innerHTML = '<div class="empty">مفيش صنف بالاسم ده.</div>'; return; }
+  host.innerHTML = '';
+  hits.forEach(function (p) {
+    const el = document.createElement('div');
+    el.className = 'hit';
+    el.innerHTML = '<div><div class="h-name">' + esc(p.name) + '</div>' +
+      '<div class="h-sub">كود ' + esc(p.sku) + ' · موجود ' + esc(fmtNum(p.qty)) + ' · آخر شراء ' +
+      esc(p.price === null ? '—' : fmtNum(p.price)) + '</div></div><div class="line-tot">+</div>';
+    el.onclick = function () { addToBuy(p); };
+    host.appendChild(el);
+  });
+}
+
+function addToBuy(p) {
+  if (!PCART_REF) PCART_REF = newCartRef();
+  const ex = PCART.filter(function (l) { return l.id === p.id; })[0];
+  if (ex) { ex.qty = (Number(ex.qty) || 0) + 1; }
+  else PCART.push({ id: p.id, name: p.name, unit: p.unit, qty: 1, cost: (p.price === null ? '' : p.price) });
+  $('buySearch').value = '';
+  $('buyRes').innerHTML = '';
+  renderBuyCart();
+  saveBuyLocal();
+}
+
+function renderBuyCart() {
+  const host = $('buyCart');
+  $('buyCount').textContent = PCART.length ? '(' + PCART.length + ')' : '';
+  if (!PCART.length) {
+    host.innerHTML = '<div class="empty">لسه مضفتش أصناف.</div>';
+  } else {
+    host.innerHTML = '';
+    PCART.forEach(function (l) {
+      const el = document.createElement('div');
+      el.className = 'cart-row';
+      el.innerHTML =
+        '<div class="cart-top">' +
+          '<div><div class="cart-name">' + esc(l.name) + '</div></div>' +
+          '<div class="line-tot">' + esc(fmtNum((Number(l.qty) || 0) * (Number(l.cost) || 0))) + '</div>' +
+        '</div>' +
+        '<div class="cart-fields">' +
+          '<div><label>الكمية</label><input data-bq type="text" inputmode="decimal" value="' + esc(l.qty) + '"></div>' +
+          '<div><label>سعر الشراء</label><input data-bc type="text" inputmode="decimal" value="' + esc(l.cost) + '"></div>' +
+          '<button class="cart-del" data-bx type="button">حذف</button>' +
+        '</div>';
+      el.querySelector('[data-bq]').addEventListener('input', function () {
+        const raw = this.value.trim(), v = parseNum(raw);
+        l.qty = (raw === '') ? '' : (v === null ? null : v);
+        this.style.borderColor = (raw !== '' && v === null) ? 'var(--red)' : '';
+        el.querySelector('.line-tot').textContent = fmtNum((Number(l.qty) || 0) * (Number(l.cost) || 0));
+        updateBuyTotals(); saveBuyLocal();
+      });
+      el.querySelector('[data-bc]').addEventListener('input', function () {
+        const raw = this.value.trim(), v = parseNum(raw);
+        l.cost = (raw === '') ? '' : (v === null ? null : v);
+        this.style.borderColor = (raw !== '' && v === null) ? 'var(--red)' : '';
+        el.querySelector('.line-tot').textContent = fmtNum((Number(l.qty) || 0) * (Number(l.cost) || 0));
+        updateBuyTotals(); saveBuyLocal();
+      });
+      el.querySelector('[data-bx]').onclick = function () {
+        const at = PCART.indexOf(l);
+        if (at !== -1) PCART.splice(at, 1);
+        renderBuyCart(); saveBuyLocal();
+      };
+      host.appendChild(el);
+    });
+  }
+  updateBuyTotals();
+}
+
+function updateBuyTotals() {
+  const t = buyTotals();
+  $('bSub').textContent = money(t.sub);
+  $('bNet').textContent = money(t.net);
+  const rawP = $('buyPaid').value.trim();
+  const paidB = rawP === '' ? t.net : parseNum(rawP);
+  const dueB = (paidB === null) ? 0 : Math.round((t.net - paidB) * 100) / 100;
+  $('buyDueRow').style.display = (dueB > 0) ? '' : 'none';
+  $('buyDue').textContent = money(dueB > 0 ? dueB : 0);
+  $('buyMain').textContent = (CASH && CASH.main !== null && CASH.main !== undefined) ? money(CASH.main) : '—';
+}
+
+function clearBuy(silent) {
+  PCART = []; PCART_REF = '';
+  dropBuyLocal();
+  $('bDisc').value = '0';
+  $('buyPaid').value = '';
+  $('buyDueRow').style.display = 'none';
+  $('buyNotes').value = '';
+  $('buySearch').value = '';
+  $('buyRes').innerHTML = '';
+  renderBuyCart();
+  if (!silent) toast('اتمسحت الفاتورة.', 'ok');
+}
+
+async function saveBuy() {
+  const btn = $('btnSaveBuy');
+  if (!PCART.length) { toast('ضيف صنف واحد على الأقل.', 'err'); return; }
+  for (let i = 0; i < PCART.length; i++) {
+    const l = PCART[i];
+    if (l.qty === null) { toast('الكمية في "' + l.name + '" مش رقم مفهوم.', 'err'); return; }
+    if (l.cost === null) { toast('سعر الشراء في "' + l.name + '" مش رقم مفهوم.', 'err'); return; }
+    if (l.qty === '' || Number(l.qty) <= 0) { toast('اكتب كمية صحيحة لـ "' + l.name + '".', 'err'); return; }
+    if (l.cost === '') { toast('اكتب سعر الشراء لـ "' + l.name + '".', 'err'); return; }
+    if (Number(l.cost) < 0) { toast('السعر مينفعش يكون بالسالب.', 'err'); return; }
+  }
+  const t = buyTotals();
+  if (t.disc === null) { toast('الخصم مش رقم مفهوم.', 'err'); return; }
+  if (t.disc > t.sub) { toast('الخصم أكبر من إجمالي الفاتورة.', 'err'); return; }
+
+  const rawBP = $('buyPaid').value.trim();
+  const paidB = rawBP === '' ? t.net : parseNum(rawBP);
+  if (paidB === null) { toast('المدفوع مش رقم مفهوم.', 'err'); return; }
+  if (paidB < 0 || paidB > t.net) { toast('المدفوع لازم يكون بين صفر وإجمالي الفاتورة.', 'err'); return; }
+  if (paidB < t.net && !$('buySupplier').value) {
+    toast('الشراء بالآجل لازم تختار المورد الأول.', 'err');
+    return;
+  }
+
+  btnBusy(btn, true, 'بيحفظ');
+  try {
+    if (!PCART_REF) PCART_REF = newCartRef();
+    const r = await api('createPurchase', {
+      partyId: $('buySupplier').value,
+      lines: PCART.map(function (l) { return { id: l.id, qty: Number(l.qty), cost: Number(l.cost) }; }),
+      discount: t.disc,
+      notes: $('buyNotes').value.trim(),
+      paid: paidB,
+      clientRef: PCART_REF
+    }, { timeout: 60000 });
+
+    clearBuy(true);
+    invLoaded = false; cashLoaded = false; purchasesLoaded = false; dashLoaded = false;
+    loadInventory(true);
+    loadCash(true);
+    toast(r.message, r.duplicate ? 'warn' : 'ok');
+    openSavedModal(r.invoice);
+  } catch (e) {
+    toast(e.message, 'err');
+  } finally {
+    btnBusy(btn, false);
+  }
+}
+
+async function loadPurchases(force) {
+  if (purchasesLoaded && !force) return true;
+  $('buyList').innerHTML = '<div class="empty">بحمّل…</div>';
+  try {
+    const r = await api('listPurchases', { limit: 100 }, { timeout: 60000 });
+    PURCHASES = r.purchases;
+    purchasesLoaded = true;
+    $('buyCnt').textContent = fmtNum(r.summary.count);
+    $('buyTot').textContent = money(r.summary.total);
+    const host = $('buyList');
+    if (!PURCHASES.length) { host.innerHTML = '<div class="empty">مفيش فواتير شراء.</div>'; return true; }
+    host.innerHTML = '';
+    PURCHASES.forEach(function (inv) {
+      const el = document.createElement('div');
+      el.className = 'inv-row' + (inv.status === 'ملغاة' ? ' inv-cancelled' : '');
+      el.innerHTML =
+        '<div class="row-top"><div>' +
+          '<div class="row-name">' + ltr(inv.number) +
+            (inv.status === 'ملغاة' ? ' <span class="badge badge-cancel">ملغاة</span>' : '') + '</div>' +
+          '<div class="row-sub">' + ltr(inv.time) + (inv.customer ? ' · ' + esc(inv.customer) : '') + '</div>' +
+        '</div><div class="line-tot">' + esc(money(inv.total)) + '</div></div>';
+      el.onclick = function () { openInvoiceModal(inv.number); };
+      host.appendChild(el);
+    });
+    return true;
+  } catch (e) {
+    $('buyList').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    return false;
+  }
+}
+
+/* ── ربط ── */
+$('buySearch').addEventListener('input', function () {
+  if (buyTimer) clearTimeout(buyTimer);
+  buyTimer = setTimeout(renderBuyResults, 130);
+});
+$('bDisc').addEventListener('input', function () { updateBuyTotals(); saveBuyLocal(); });
+$('buyPaid').addEventListener('input', function () { updateBuyTotals(); saveBuyLocal(); });
+$('buyNotes').addEventListener('input', saveBuyLocal);
+$('buySupplier').addEventListener('change', saveBuyLocal);
+$('btnSaveBuy').addEventListener('click', saveBuy);
+$('btnClearBuy').addEventListener('click', async function () {
+  if (!PCART.length) { clearBuy(true); return; }
+  const yes = await confirmBox('مسح الفاتورة', 'هتمسح كل الأصناف اللي في فاتورة الشراء.', 'مسح');
+  if (yes) clearBuy();
+});
+$('btnAddParty').addEventListener('click', function () { openPartyModal(null); });
+$('chipSup').addEventListener('click', function () {
+  partyKind = 'مورد'; this.classList.add('on'); $('chipCus').classList.remove('on'); renderParties();
+});
+$('chipCus').addEventListener('click', function () {
+  partyKind = 'عميل'; this.classList.add('on'); $('chipSup').classList.remove('on'); renderParties();
+});
+$('btnReloadBuy').addEventListener('click', async function () {
+  const btn = $('btnReloadBuy');
+  btnBusy(btn, true, 'بيحدّث');
+  const okDone = await loadPurchases(true);
+  btnBusy(btn, false);
+  if (okDone) toast('اتحدّثت المشتريات.', 'ok');
+});
+document.querySelectorAll('#buySubs button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    const id = b.dataset.bsub;
+    document.querySelectorAll('#buySubs button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    ['new', 'log', 'party'].forEach(function (k) { $('bsub-' + k).classList.toggle('hidden', k !== id); });
+    if (id === 'log') loadPurchases(false);
+    window.scrollTo(0, 0);
+  });
+});
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ١٧) الحسابات: المديونيات والسندات وكشف الحساب
+   ═══════════════════════════════════════════════════════════════ */
+
+let DEBTS = null, debtsLoaded = false;
+let VOUCHERS = [], vouchLoaded = false;
+
+function fillPartySelects() {
+  const isAdmin = ME && ME.role === 'admin';
+  const cus = PARTIES.filter(function (p) { return p.type === 'عميل' && p.active; });
+  const opt = function (p) { return '<option value="' + esc(p.id) + '">' + esc(p.name) + '</option>'; };
+
+  const sel = $('posParty');
+  if (sel) {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">— عميل عابر —</option>' + cus.map(opt).join('');
+    sel.value = cur;
+  }
+  const st = $('stmtParty');
+  if (st) {
+    const cur2 = st.value;
+    const all = isAdmin ? PARTIES.filter(function (p) { return p.active; }) : cus;
+    st.innerHTML = '<option value="">— اختار —</option>' +
+      all.map(function (p) { return '<option value="' + esc(p.id) + '">' + esc(p.name) + ' (' + esc(p.type) + ')</option>'; }).join('');
+    st.value = cur2;
+  }
+}
+
+async function loadDebts(force) {
+  if (debtsLoaded && !force) return true;
+  $('debtList').innerHTML = '<div class="empty">بحمّل…</div>';
+  try {
+    const r = await api('debtsSummary', {}, { timeout: 60000 });
+    DEBTS = r; debtsLoaded = true;
+    $('debtCus').textContent = money(r.summary.customersOwe);
+    $('debtSup').textContent = money(r.summary.weOwe);
+    const host = $('debtList');
+    if (!r.parties.length) { host.innerHTML = '<div class="empty">مفيش مديونيات — كله مسدّد. 👌</div>'; return true; }
+    host.innerHTML = '';
+    r.parties.forEach(function (p) {
+      const el = document.createElement('div');
+      el.className = 'inv-row';
+      const cls = p.type === 'عميل' ? 'cash-in' : 'cash-out';
+      el.innerHTML =
+        '<div class="row-top"><div>' +
+          '<div class="row-name">' + esc(p.name) + ' <span class="badge ' +
+            (p.type === 'عميل' ? 'badge-sales' : 'badge-admin') + '">' + esc(p.type) + '</span></div>' +
+          (p.phone ? '<div class="row-sub">' + ltr(p.phone) + '</div>' : '') +
+        '</div><div class="cash-amt ' + cls + '">' + esc(money(p.balance)) + '</div></div>';
+      el.onclick = function () { openStatement(p.id); };
+      host.appendChild(el);
+    });
+    return true;
+  } catch (e) {
+    $('debtList').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    return false;
+  }
+}
+
+async function loadVouchers(force) {
+  if (vouchLoaded && !force) return true;
+  $('vouchList').innerHTML = '<div class="empty">بحمّل…</div>';
+  try {
+    const r = await api('listVouchers', { limit: 60 }, { timeout: 60000 });
+    VOUCHERS = r.vouchers; vouchLoaded = true;
+    const host = $('vouchList');
+    if (!VOUCHERS.length) { host.innerHTML = '<div class="empty">مفيش سندات لسه.</div>'; return true; }
+    host.innerHTML = '';
+    const isAdmin = ME && ME.role === 'admin';
+    VOUCHERS.forEach(function (v) {
+      const el = document.createElement('div');
+      el.className = 'cash-row' + (v.status === 'ملغاة' ? ' inv-cancelled' : '');
+      el.innerHTML =
+        '<div class="row-top"><div>' +
+          '<div class="row-name">سند ' + esc(v.type) + ' — ' + esc(v.partyName) +
+            (v.status === 'ملغاة' ? ' <span class="badge badge-cancel">ملغي</span>' : '') + '</div>' +
+          (v.notes ? '<div class="row-sub">' + esc(v.notes) + '</div>' : '') +
+          '<div class="row-sub">' + ltr(v.time) + ' · ' + esc(v.userName || v.user) + '</div>' +
+        '</div><div class="cash-amt ' + (v.type === 'قبض' ? 'cash-in' : 'cash-out') + '">' +
+          (v.type === 'قبض' ? '+' : '−') + esc(money(v.amount)) + '</div></div>' +
+        (isAdmin && v.status !== 'ملغاة'
+          ? '<div class="row-actions"><button class="btn-danger btn-sm" data-cv>إلغاء السند</button></div>' : '');
+      const cb = el.querySelector('[data-cv]');
+      if (cb) cb.onclick = function () { openCancelVoucher(v); };
+      host.appendChild(el);
+    });
+    return true;
+  } catch (e) {
+    $('vouchList').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    return false;
+  }
+}
+
+function openVoucherModal(kind) {
+  const isIn = (kind === 'قبض');
+  const list = PARTIES.filter(function (p) {
+    return p.active && p.type === (isIn ? 'عميل' : 'مورد');
+  });
+  if (!list.length) {
+    toast(isIn ? 'مفيش عملاء مسجّلين — ضيف عميل الأول.' : 'مفيش موردين مسجّلين.', 'warn');
+    return;
+  }
+  const bg = openModal(
+    '<h3>' + (isIn ? '➕ سند قبض من عميل' : '➖ سند صرف لمورد') + '</h3>' +
+    '<p class="desc">' + (isIn ? 'الفلوس هتدخل درج الكاشير وتقلّل مديونية العميل.'
+                                : 'الفلوس هتخرج من الحساب العام وتقلّل اللي علينا للمورد.') + '</p>' +
+    '<label>' + (isIn ? 'العميل' : 'المورد') + '</label><select id="vParty">' +
+      list.map(function (p) {
+        return '<option value="' + esc(p.id) + '">' + esc(p.name) +
+               (p.balance !== null && p.balance !== undefined && p.balance !== 0
+                 ? ' — عليه ' + esc(fmtNum(p.balance)) : '') + '</option>';
+      }).join('') + '</select>' +
+    '<label>المبلغ</label><input id="vAmt" type="text" inputmode="decimal">' +
+    '<label>ملاحظة (اختياري)</label><input id="vNote" type="text" maxlength="160">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>إلغاء</button>' +
+    '<button class="btn" data-ok>تسجيل السند</button></div>'
+  );
+  const ref = newCartRef();
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const raw = bg.querySelector('#vAmt').value.trim();
+    const v = parseNum(raw);
+    if (raw === '') { toast('اكتب المبلغ.', 'err'); return; }
+    if (v === null) { toast('المبلغ مش رقم مفهوم.', 'err'); return; }
+    if (v <= 0) { toast('المبلغ لازم يكون أكبر من صفر.', 'err'); return; }
+
+    btnBusy(btn, true, 'بيسجّل');
+    try {
+      const r = await api('createVoucher', {
+        kind: kind, partyId: bg.querySelector('#vParty').value, amount: v,
+        notes: bg.querySelector('#vNote').value.trim(), clientRef: ref
+      }, { timeout: 60000 });
+      closeModal(bg);
+      toast(r.message, r.duplicate ? 'warn' : 'ok');
+      vouchLoaded = false; debtsLoaded = false; cashLoaded = false; partiesLoaded = false; dashLoaded = false;
+      loadVouchers(true); loadCash(true); loadParties(true);
+      if (ME.role === 'admin') loadDebts(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+function openCancelVoucher(v) {
+  const bg = openModal(
+    '<h3>إلغاء سند ' + esc(v.type) + '</h3>' +
+    '<p class="desc">' + esc(v.partyName) + ' · ' + esc(money(v.amount)) + '<br>' +
+    'السند مش هيتمسح — هيتعلّم «ملغي» والفلوس هترجع زي ما كانت.</p>' +
+    '<label>سبب الإلغاء (إجباري)</label><input id="cvReason" type="text" maxlength="120">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>رجوع</button>' +
+    '<button class="btn-danger" data-ok>تأكيد الإلغاء</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const reason = bg.querySelector('#cvReason').value.trim();
+    if (!reason) { toast('اكتب سبب الإلغاء.', 'err'); return; }
+    btnBusy(btn, true, 'بيلغي');
+    try {
+      const r = await api('cancelVoucher', { id: v.id, reason: reason }, { timeout: 60000 });
+      closeModal(bg);
+      toast(r.message, 'ok');
+      vouchLoaded = false; debtsLoaded = false; cashLoaded = false; partiesLoaded = false; dashLoaded = false;
+      loadVouchers(true); loadCash(true); loadParties(true); loadDebts(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+async function openStatement(partyId) {
+  // بنفتح تاب الحسابات ← كشف حساب
+  showTab('acct');
+  document.querySelectorAll('#acctSubs button').forEach(function (x) {
+    x.classList.toggle('on', x.dataset.asub === 'stmt');
+  });
+  ['debt', 'vouch', 'stmt'].forEach(function (k) {
+    $('asub-' + k).classList.toggle('hidden', k !== 'stmt');
+  });
+  $('stmtParty').value = partyId;
+  await loadStatement();
+}
+
+async function loadStatement() {
+  const pid = $('stmtParty').value;
+  const host = $('stmtRows');
+  if (!pid) { host.innerHTML = '<div class="empty">اختار طرف عشان تشوف كشف حسابه.</div>'; $('stmtBal').textContent = '—'; return; }
+  host.innerHTML = '<div class="empty">بحمّل…</div>';
+  try {
+    const r = await api('partyStatement', { partyId: pid }, { timeout: 60000 });
+    $('stmtBal').textContent = money(r.balance);
+    if (!r.rows.length) { host.innerHTML = '<div class="empty">مفيش حركات على الطرف ده.</div>'; return; }
+    host.innerHTML =
+      '<div class="scroll-x"><table class="inv">' +
+      '<tr><th>الحركة</th><th>التاريخ</th><th>القيمة</th><th>المدفوع</th><th>الرصيد</th></tr>' +
+      r.rows.map(function (x) {
+        return '<tr' + (x.status === 'ملغاة' ? ' style="opacity:.5;text-decoration:line-through"' : '') + '>' +
+          '<td>' + esc(x.docType) + '<br><span class="row-sub">' + ltr(x.ref) + '</span></td>' +
+          '<td class="num">' + ltr(String(x.time).substring(0, 10)) + '</td>' +
+          '<td class="num">' + esc(fmtNum(x.total)) + '</td>' +
+          '<td class="num">' + esc(fmtNum(x.paid)) + '</td>' +
+          '<td class="num"><b>' + esc(fmtNum(x.balance)) + '</b></td></tr>';
+      }).join('') + '</table></div>';
+  } catch (e) {
+    host.innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+  }
+}
+
+/* ── ربط ── */
+$('btnVouchIn').addEventListener('click', function () { openVoucherModal('قبض'); });
+$('btnVouchOut').addEventListener('click', function () { openVoucherModal('صرف'); });
+$('btnReloadVouch').addEventListener('click', async function () {
+  const btn = $('btnReloadVouch');
+  btnBusy(btn, true, 'بيحدّث'); const d = await loadVouchers(true); btnBusy(btn, false);
+  if (d) toast('اتحدّثت السندات.', 'ok');
+});
+$('btnReloadDebt').addEventListener('click', async function () {
+  const btn = $('btnReloadDebt');
+  btnBusy(btn, true, 'بيحدّث'); const d = await loadDebts(true); btnBusy(btn, false);
+  if (d) toast('اتحدّثت المديونيات.', 'ok');
+});
+$('stmtParty').addEventListener('change', loadStatement);
+document.querySelectorAll('#acctSubs button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    const id = b.dataset.asub;
+    document.querySelectorAll('#acctSubs button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    ['debt', 'vouch', 'stmt'].forEach(function (k) { $('asub-' + k).classList.toggle('hidden', k !== id); });
+    if (id === 'debt' && ME.role === 'admin') loadDebts(false);
+    if (id === 'vouch') loadVouchers(false);
+    window.scrollTo(0, 0);
+  });
+});
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ١١ب) المصاريف والأرباح (المرحلة ٥) — للمسؤول بس
+   ═══════════════════════════════════════════════════════════════ */
+
+let EXPENSES = [], EXP_CATS = [], expLoaded = false;
+const MONTH_NAMES = ['يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو',
+                     'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+
+/* تاريخ السيرفر مش تاريخ الجهاز — ساعة الموبايل ممكن تكون غلط (نفس todayStr) */
+function serverToday() { return todayStr(); }
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function lastDayOf(y, m) { return new Date(y, m, 0).getDate(); }
+
+function fillPeriodSelects() {
+  const y = Number(serverToday().slice(0, 4));
+  const mSel = $('pfMonth'), ySel = $('pfYear');
+  if (!mSel.options.length) {
+    mSel.innerHTML = MONTH_NAMES.map(function (n, i) {
+      return '<option value="' + (i + 1) + '">' + n + '</option>';
+    }).join('');
+    mSel.value = String(Number(serverToday().slice(5, 7)));
+  }
+  if (!ySel.options.length) {
+    let h = '';
+    for (let i = y + 1; i >= y - 4; i--) h += '<option value="' + i + '">' + i + '</option>';
+    ySel.innerHTML = h;
+    ySel.value = String(y);
+  }
+}
+
+/* بيرجّع { from, to, label } من اختيار الفترة */
+function periodRange() {
+  const kind = $('pfPeriod').value;
+  const today = serverToday();
+  const y = Number(today.slice(0, 4)), m = Number(today.slice(5, 7));
+
+  if (kind === 'today') return { from: today, to: today, label: 'النهارده ' + today };
+  if (kind === 'all')   return { from: '', to: '', label: 'من أول السيستم' };
+
+  let yy = y, mm = m;
+  if (kind === 'prev') { mm = m - 1; if (mm === 0) { mm = 12; yy = y - 1; } }
+  if (kind === 'pickMonth') { mm = Number($('pfMonth').value); yy = Number($('pfYear').value); }
+  if (kind === 'pickYear') {
+    yy = Number($('pfYear').value);
+    return { from: yy + '-01-01', to: yy + '-12-31', label: 'سنة ' + yy };
+  }
+  const from = yy + '-' + pad2(mm) + '-01';
+  const to   = yy + '-' + pad2(mm) + '-' + pad2(lastDayOf(yy, mm));
+  return { from: from, to: to, label: MONTH_NAMES[mm - 1] + ' ' + yy };
+}
+
+$('pfPeriod').addEventListener('change', function () {
+  const k = $('pfPeriod').value;
+  const show = (k === 'pickMonth' || k === 'pickYear');
+  $('pfPickWrap').classList.toggle('hidden', !show);
+  $('pfMonthWrap').classList.toggle('hidden', k !== 'pickMonth');
+});
+
+async function loadProfit() {
+  const btn = $('btnProfit');
+  const r0 = periodRange();
+  btnBusy(btn, true, 'بيحسب');
+  try {
+    const r = await api('profitReport', { from: r0.from, to: r0.to }, { timeout: 60000 });
+    renderProfit(r, r0.label);
+  } catch (e) {
+    $('pfBody').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    toast(e.message, 'err');
+  }
+  btnBusy(btn, false);
+}
+
+function pfRow(k, v, cls, big) {
+  return '<div class="pf-row' + (big ? ' tot' : '') + '"><span>' + esc(k) + '</span>' +
+         '<span class="' + (cls || '') + '">' + ltr(money(v)) + '</span></div>';
+}
+
+function renderProfit(r, label) {
+  const i = r.info || {};
+  const cats = (r.expenseCats || []).map(function (c) {
+    return '<div class="pf-row"><span style="padding-right:14px">• ' + esc(c.cat) + '</span>' +
+           '<span>' + ltr(money(c.amount)) + '</span></div>';
+  }).join('');
+
+  $('pfBody').innerHTML =
+    '<h3 style="margin:0 0 10px">' + esc(label) + '</h3>' +
+    pfRow('المحصّل من المبيعات', r.collected) +
+    pfRow('− تكلفة البضاعة المحصّلة', r.cogs, 'neg') +
+    pfRow('= مجمل الربح', r.grossProfit, '', true) +
+    '<div style="height:14px"></div>' +
+    pfRow('المصاريف', r.expenses, 'neg') + cats +
+    pfRow('= صافي الربح', r.net, '', true) +
+    '<div class="pf-note">' +
+      'مبيعات الفترة بالكامل (وقت البيع): <b>' + ltr(money(i.soldInPeriod)) + '</b>' +
+      ' في <b>' + ltr(fmtNum(i.invoiceCount)) + '</b> فاتورة' +
+      (i.returnedInPeriod ? ' · مرتجعات: <b>' + ltr(money(i.returnedInPeriod)) + '</b>' : '') + '<br>' +
+      'لسه عند العملاء (كل السيستم): <b>' + ltr(money(i.stillOwed)) + '</b>' +
+      (i.unallocated ? ' · دفعات مقدمة لسه ما اتقابلتش ببضاعة: <b>' + ltr(money(i.unallocated)) + '</b>' : '') +
+      '<br>الفرق بين المبيعات والمحصّل طبيعي — الآجل بيتحسب ربح يوم ما العميل يدفع.' +
+    '</div>' +
+    '<div style="height:12px"></div>' +
+    '<button class="btn-2" id="btnPrintProfit" type="button">🖨️ طباعة التقرير</button>';
+
+  // الطباعة بتتجهّز مع الضغطة نفسها — من غير أي انتظار للسيرفر
+  $('btnPrintProfit').onclick = function () { printProfit(r, label); };
+}
+
+function printProfit(r, label) {
+  const st = SETTINGS || {};
+  const cur = st.currency || 'ج.م';
+  const line = function (k, v, b) {
+    return '<tr' + (b ? ' style="font-weight:bold"' : '') + '><td>' + esc(k) + '</td>' +
+           '<td class="c">' + ltr(fmtNum(v) + ' ' + cur) + '</td></tr>';
+  };
+  const cats = (r.expenseCats || []).map(function (c) {
+    return '<tr><td style="padding-right:18px">• ' + esc(c.cat) + '</td><td class="c">' +
+           ltr(fmtNum(c.amount)) + '</td></tr>';
+  }).join('');
+
+  $('printArea').innerHTML =
+    '<div class="pr-head">' +
+      '<div><div class="pr-store">' + esc(st.storeName || 'المحل') + '</div>' +
+      (st.phone ? '<div class="pr-sub">ت: ' + esc(st.phone) + '</div>' : '') + '</div>' +
+      '<div class="pr-title">تقرير الأرباح</div>' +
+    '</div>' +
+    '<div class="pr-meta"><div><b>الفترة:</b> ' + esc(label) + '</div>' +
+      '<div><b>اتطبع في:</b> ' + ltr(serverToday()) + '</div></div>' +
+    '<table class="pr">' +
+      line('المحصّل من المبيعات', r.collected) +
+      line('تكلفة البضاعة المحصّلة', r.cogs) +
+      line('مجمل الربح', r.grossProfit, true) +
+      line('المصاريف', r.expenses) + cats +
+      line('صافي الربح', r.net, true) +
+    '</table>' +
+    '<div class="pr-foot">الربح محسوب على أساس التحصيل · مبيعات الفترة بالكامل ' +
+      esc(fmtNum((r.info || {}).soldInPeriod)) + ' ' + esc(cur) + '</div>';
+
+  void $('printArea').offsetHeight;
+  window.print();
+  setTimeout(function () { $('printArea').innerHTML = ''; }, 4000);
+}
+
+/* ── المصاريف ── */
+
+async function loadExpenses(force) {
+  if (expLoaded && !force) return true;
+  try {
+    const r = await api('listExpenses', { cat: $('expFilterCat').value || '' }, { timeout: 60000 });
+    EXPENSES = r.expenses;
+    EXP_CATS = r.cats || [];
+    expLoaded = true;
+    $('expTotal').textContent = money(r.total);
+    fillExpCatFilter();
+    renderExpenses();
+    renderExpCats();
+    return true;
+  } catch (e) {
+    $('expList').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    return false;
+  }
+}
+
+function fillExpCatFilter() {
+  const sel = $('expFilterCat');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— كل البنود —</option>' +
+    EXP_CATS.map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
+  sel.value = cur;
+}
+
+function renderExpenses() {
+  const host = $('expList');
+  if (!EXPENSES.length) { host.innerHTML = '<div class="empty">مفيش مصاريف مسجّلة في الفلتر ده.</div>'; return; }
+  host.innerHTML = '';
+  EXPENSES.forEach(function (e) {
+    const el = document.createElement('div');
+    const dead = (e.status === 'ملغي' || e.status === 'ملغاة');
+    el.className = 'row-item' + (dead ? ' prod-off' : '');
+    el.innerHTML =
+      '<div class="row-top"><div>' +
+        '<div class="row-name">' + esc(e.cat) +
+          (dead ? ' <span class="badge badge-off">ملغي</span>' : '') + '</div>' +
+        '<div class="row-sub">' + ltr(String(e.time).substring(0, 16)) +
+          ' · ' + esc(e.userName || e.user) + '</div>' +
+        (e.notes ? '<div class="row-sub">' + esc(e.notes) + '</div>' : '') +
+      '</div><div class="cash-amt">' + ltr(money(e.amount)) + '</div></div>' +
+      (dead ? '' : '<div class="row-actions"><button class="btn-2 btn-sm" data-cn>إلغاء</button></div>');
+    const cb = el.querySelector('[data-cn]');
+    if (cb) cb.onclick = function () { cancelExpense(e); };
+    host.appendChild(el);
+  });
+}
+
+function openExpenseModal() {
+  if (!EXP_CATS.length) { toast('ضيف بند مصروف واحد على الأقل الأول.', 'warn'); return; }
+  const bg = openModal(
+    '<h3>💸 تسجيل مصروف</h3>' +
+    '<p class="desc">الفلوس هتخرج من <b>الحساب العام</b>.</p>' +
+    '<label>البند</label><select id="exCat">' +
+      EXP_CATS.map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('') +
+    '</select>' +
+    '<label>المبلغ</label><input id="exAmt" type="text" inputmode="decimal">' +
+    '<label>ملاحظة (مثال: إيجار شهر ٩ · مرتب أحمد)</label><input id="exNote" type="text" maxlength="160">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>إلغاء</button>' +
+    '<button class="btn" data-ok>تسجيل</button></div>'
+  );
+  const ref = newCartRef();
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const raw = bg.querySelector('#exAmt').value.trim();
+    const v = parseNum(raw);
+    if (v === null || raw === '') { toast('اكتب مبلغ صحيح.', 'err'); return; }
+    if (v <= 0) { toast('المبلغ لازم يكون أكبر من صفر.', 'err'); return; }
+    btnBusy(btn, true, 'بيسجّل');
+    try {
+      const r = await api('createExpense', {
+        cat: bg.querySelector('#exCat').value,
+        amount: v,
+        notes: bg.querySelector('#exNote').value.trim(),
+        clientRef: ref
+      }, { timeout: 60000 });
+      closeModal(bg);
+      toast(r.message, r.duplicate ? 'warn' : 'ok');
+      cashLoaded = false; dashLoaded = false;
+      await loadExpenses(true);
+      loadCash(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+async function cancelExpense(e) {
+  const bg = openModal(
+    '<h3>إلغاء مصروف</h3>' +
+    '<p class="desc">' + esc(e.cat) + ' · ' + esc(money(e.amount)) +
+      '<br>المصروف مش هيتمسح — هيتكتب عليه «ملغي» والفلوس هترجع للحساب العام.</p>' +
+    '<label>سبب الإلغاء (إجباري)</label><input id="exRes" type="text" maxlength="120">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>رجوع</button>' +
+    '<button class="btn-danger" data-ok>تأكيد الإلغاء</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const reason = bg.querySelector('#exRes').value.trim();
+    if (!reason) { toast('اكتب سبب الإلغاء.', 'err'); return; }
+    btnBusy(btn, true, 'بيلغي');
+    try {
+      const r = await api('cancelExpense', { id: e.id, reason: reason }, { timeout: 60000 });
+      closeModal(bg);
+      toast(r.message, 'ok');
+      cashLoaded = false; dashLoaded = false;
+      await loadExpenses(true);
+      loadCash(true);
+    } catch (err) {
+      toast(err.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+/* ── بنود المصاريف ── */
+
+function renderExpCats() {
+  const host = $('expCatList');
+  if (!EXP_CATS.length) { host.innerHTML = '<div class="empty">مفيش بنود لسه.</div>'; return; }
+  host.innerHTML = '';
+  EXP_CATS.forEach(function (c) {
+    const el = document.createElement('div');
+    el.className = 'row-item';
+    el.innerHTML = '<div class="row-top"><div class="row-name">' + esc(c) + '</div></div>' +
+      '<div class="row-actions">' +
+        '<button class="btn-2 btn-sm" data-ed>تعديل</button>' +
+        '<button class="btn-2 btn-sm" data-del>حذف</button></div>';
+    el.querySelector('[data-ed]').onclick = function () { openExpCatModal(c); };
+    el.querySelector('[data-del]').onclick = async function () {
+      const ok2 = await confirmBox('حذف البند', 'تحذف بند «' + c + '»؟', 'احذف');
+      if (!ok2) return;
+      busy(true);
+      try {
+        const r = await api('deleteExpenseCat', { name: c });
+        EXP_CATS = r.cats; fillExpCatFilter(); renderExpCats();
+        toast(r.message, 'ok');
+      } catch (e) { toast(e.message, 'err'); }
+      busy(false);
+    };
+    host.appendChild(el);
+  });
+}
+
+function openExpCatModal(oldName) {
+  const bg = openModal(
+    '<h3>' + (oldName ? 'تعديل بند' : 'بند مصروف جديد') + '</h3>' +
+    '<label>اسم البند</label><input id="ecName" type="text" maxlength="40" value="' + esc(oldName || '') + '">' +
+    (oldName ? '<p class="desc">تغيير الاسم بيتغيّر كمان في المصاريف القديمة.</p>' : '') +
+    '<div class="modal-actions"><button class="btn-2" data-no>إلغاء</button>' +
+    '<button class="btn" data-ok>حفظ</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const name = bg.querySelector('#ecName').value.trim();
+    if (!name) { toast('اكتب اسم البند.', 'err'); return; }
+    btnBusy(btn, true, 'بيحفظ');
+    try {
+      const r = await api('saveExpenseCat', { name: name, oldName: oldName || '' });
+      EXP_CATS = r.cats;
+      closeModal(bg);
+      toast(r.message, 'ok');
+      fillExpCatFilter(); renderExpCats();
+      if (oldName) loadExpenses(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+/* ── ربط ── */
+$('btnProfit').addEventListener('click', loadProfit);
+$('btnAddExp').addEventListener('click', openExpenseModal);
+$('btnAddExpCat').addEventListener('click', function () { openExpCatModal(''); });
+$('expFilterCat').addEventListener('change', function () { loadExpenses(true); });
+$('btnReloadExp').addEventListener('click', async function () {
+  const btn = $('btnReloadExp');
+  btnBusy(btn, true, 'بيحدّث'); const d = await loadExpenses(true); btnBusy(btn, false);
+  if (d) toast('اتحدّثت المصاريف.', 'ok');
+});
+document.querySelectorAll('#expSubs button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    const id = b.dataset.esub;
+    document.querySelectorAll('#expSubs button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    ['profit', 'list', 'cats'].forEach(function (k) { $('esub-' + k).classList.toggle('hidden', k !== id); });
+    if (id === 'list' || id === 'cats') loadExpenses(false);
+    window.scrollTo(0, 0);
+  });
+});
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ١١ج) الشركاء والداش بورد (المرحلة ٦)
+   ═══════════════════════════════════════════════════════════════ */
+
+let PARTNERS = [], PMOVES = [], PSUM = null, partnersLoaded = false, partnersAt = 0;
+let DASH = null, dashLoaded = false, dashAt = 0, dbProfMode = 'month';
+
+async function loadPartners(force) {
+  // الأرصدة بتتغيّر مع كل بيعة (نصيب الشريك من الربح) — فبنجددها كل دقيقتين
+  if (partnersLoaded && !force && (Date.now() - partnersAt) < 120000) return true;
+  try {
+    const r = await api('listPartners', {}, { timeout: 60000 });
+    PARTNERS = r.partners; PMOVES = r.moves || []; PSUM = r;
+    partnersLoaded = true; partnersAt = Date.now();
+    renderPartners();
+    return true;
+  } catch (e) {
+    $('ptList').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    return false;
+  }
+}
+
+function renderPartners() {
+  $('ptCapital').innerHTML = ltr(money(PSUM.summary.capital));
+  $('ptDrawn').innerHTML   = ltr(money(PSUM.summary.withdrawn));
+  $('ptNet').innerHTML     = ltr(money(PSUM.profit.net));
+
+  const w = $('ptWarn');
+  if (Math.abs(PSUM.shareSum - 100) > 0.01) {
+    w.classList.remove('hidden');
+    w.innerHTML = '<div class="warn-box">⚠️ مجموع نسب الشركاء ' + ltr(fmtNum(PSUM.shareSum) + '٪') +
+      ' مش ١٠٠٪. الأرقام هتتحسب بالنسب دي زي ما هي — راجعها.</div>';
+  } else { w.classList.add('hidden'); w.innerHTML = ''; }
+
+  const host = $('ptList');
+  if (!PARTNERS.length) {
+    host.innerHTML = '<div class="empty">مفيش شركاء لسه. ابدأ بـ «شريك جديد».</div>';
+  } else {
+    host.innerHTML = '';
+    PARTNERS.forEach(function (p) {
+      const el = document.createElement('div');
+      el.className = 'row-item' + (p.active ? '' : ' prod-off');
+      el.innerHTML =
+        '<div class="row-top"><div>' +
+          '<div class="row-name">' + esc(p.name) + ' · ' + ltr(fmtNum(p.share) + '٪') +
+            (p.active ? '' : ' <span class="badge badge-off">موقوف</span>') + '</div>' +
+          '<div class="row-sub">حط ' + ltr(money(p.deposited)) + ' · سحب ' + ltr(money(p.withdrawn)) + '</div>' +
+          '<div class="row-sub">نصيبه من الربح ' + ltr(money(p.profitShare)) + '</div>' +
+        '</div><div class="cash-amt ' + (p.balance < 0 ? 'neg' : '') + '">' + ltr(money(p.balance)) + '</div></div>' +
+        '<div class="row-actions">' +
+          '<button class="btn-2 btn-sm" data-in>➕ إيداع</button>' +
+          '<button class="btn-2 btn-sm" data-out>➖ سحب</button>' +
+          '<button class="btn-2 btn-sm" data-st>كشف</button>' +
+          '<button class="btn-2 btn-sm" data-ed>تعديل</button>' +
+          '<button class="btn-2 btn-sm" data-tog>' + (p.active ? 'إيقاف' : 'تفعيل') + '</button>' +
+        '</div>';
+      el.querySelector('[data-in]').onclick  = function () { openPartnerMove(p, 'إيداع شريك'); };
+      el.querySelector('[data-out]').onclick = function () { openPartnerMove(p, 'سحب شريك'); };
+      el.querySelector('[data-st]').onclick  = function () { openPartnerStatement(p); };
+      el.querySelector('[data-ed]').onclick  = function () { openPartnerModal(p); };
+      el.querySelector('[data-tog]').onclick = async function () {
+        busy(true);
+        try {
+          const r = await api('setPartnerActive', { id: p.id, active: !p.active });
+          toast(r.message, 'ok');
+          await loadPartners(true);
+        } catch (e) { toast(e.message, 'err'); }
+        busy(false);
+      };
+      host.appendChild(el);
+    });
+  }
+
+  const mh = $('ptMoves');
+  if (!PMOVES.length) { mh.innerHTML = '<div class="empty">مفيش حركات لسه.</div>'; return; }
+  mh.innerHTML = '';
+  PMOVES.forEach(function (m) {
+    const dead = (m.status === 'ملغاة' || m.status === 'ملغي');
+    const el = document.createElement('div');
+    el.className = 'row-item' + (dead ? ' prod-off' : '');
+    el.innerHTML =
+      '<div class="row-top"><div>' +
+        '<div class="row-name">' + esc(m.type) + ' · ' + esc(m.partnerName) +
+          (dead ? ' <span class="badge badge-off">ملغاة</span>' : '') + '</div>' +
+        '<div class="row-sub">' + ltr(String(m.time).substring(0, 16)) + ' · ' + esc(m.userName || m.user) + '</div>' +
+        (m.notes ? '<div class="row-sub">' + esc(m.notes) + '</div>' : '') +
+      '</div><div class="cash-amt">' + ltr(money(m.amount)) + '</div></div>' +
+      (dead ? '' : '<div class="row-actions"><button class="btn-2 btn-sm" data-cn>إلغاء</button></div>');
+    const cb = el.querySelector('[data-cn]');
+    if (cb) cb.onclick = function () { cancelPartnerMove(m); };
+    mh.appendChild(el);
+  });
+}
+
+function openPartnerModal(p) {
+  const bg = openModal(
+    '<h3>' + (p ? 'تعديل شريك' : 'شريك جديد') + '</h3>' +
+    '<label>الاسم</label><input id="pnName" type="text" maxlength="60" value="' + esc(p ? p.name : '') + '">' +
+    '<label>نسبته من الربح (٪)</label><input id="pnShare" type="text" inputmode="decimal" value="' +
+      esc(p ? String(p.share) : '') + '">' +
+    '<label>التليفون (اختياري)</label><input id="pnPhone" type="text" inputmode="tel" maxlength="30" value="' +
+      esc(p ? p.phone : '') + '">' +
+    '<label>ملاحظات (اختياري)</label><input id="pnNotes" type="text" maxlength="160" value="' +
+      esc(p ? p.notes : '') + '">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>إلغاء</button>' +
+    '<button class="btn" data-ok>حفظ</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const name = bg.querySelector('#pnName').value.trim();
+    const rawShare = bg.querySelector('#pnShare').value.trim();
+    const share = rawShare === '' ? 0 : parseNum(rawShare);
+    if (!name) { toast('اكتب اسم الشريك.', 'err'); return; }
+    if (share === null) { toast('النسبة مش رقم مفهوم.', 'err'); return; }
+    if (share < 0 || share > 100) { toast('النسبة لازم تكون بين صفر و١٠٠.', 'err'); return; }
+    btnBusy(btn, true, 'بيحفظ');
+    try {
+      const r = await api('savePartner', {
+        id: p ? p.id : '', name: name, share: share,
+        phone: bg.querySelector('#pnPhone').value.trim(),
+        notes: bg.querySelector('#pnNotes').value.trim()
+      });
+      closeModal(bg);
+      toast(r.message, r.warn ? 'warn' : 'ok');
+      dashLoaded = false;
+      await loadPartners(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+function openPartnerMove(p, kind) {
+  const isIn = (kind === 'إيداع شريك');
+  // بناخد أحدث نسخة من بيانات الشريك (الرصيد بيتغيّر مع الربح)
+  p = PARTNERS.filter(function (x) { return x.id === p.id; })[0] || p;
+  const bg = openModal(
+    '<h3>' + (isIn ? '➕ إيداع من ' : '➖ سحب لـ ') + esc(p.name) + '</h3>' +
+    '<p class="desc">' + (isIn ? 'الفلوس هتدخل <b>الحساب العام</b> وتزوّد رصيد الشريك.'
+                                : 'الفلوس هتخرج من <b>الحساب العام</b> وتقلّل رصيد الشريك.') + '</p>' +
+    '<div class="stat"><div class="k">رصيده دلوقتي</div><div class="v">' + ltr(money(p.balance)) + '</div></div>' +
+    '<label>المبلغ</label><input id="pmAmt" type="text" inputmode="decimal">' +
+    '<label>ملاحظة (اختياري)</label><input id="pmNote" type="text" maxlength="160">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>إلغاء</button>' +
+    '<button class="btn" data-ok>تسجيل</button></div>'
+  );
+  const ref = newCartRef();
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const raw = bg.querySelector('#pmAmt').value.trim();
+    const v = parseNum(raw);
+    if (v === null || raw === '') { toast('اكتب مبلغ صحيح.', 'err'); return; }
+    if (v <= 0) { toast('المبلغ لازم يكون أكبر من صفر.', 'err'); return; }
+    // تحذير ودّي بس — الرصيد بالسالب مسموح (الشريك بقى عليه فلوس للمحل)
+    if (!isIn && v > p.balance) {
+      const ok2 = await confirmBox('أكبر من رصيده',
+        'رصيد ' + p.name + ' ' + money(p.balance) + ' والسحب ' + money(v) +
+        ' — رصيده هيبقى بالسالب يعني عليه فلوس للمحل. تكمّل؟', 'كمّل');
+      if (!ok2) return;
+    }
+    btnBusy(btn, true, 'بيسجّل');
+    try {
+      const r = await api('partnerMove', {
+        kind: kind, partnerId: p.id, amount: v,
+        notes: bg.querySelector('#pmNote').value.trim(), clientRef: ref
+      }, { timeout: 60000 });
+      closeModal(bg);
+      toast(r.message, r.duplicate ? 'warn' : 'ok');
+      cashLoaded = false; dashLoaded = false;
+      await loadPartners(true);
+      loadCash(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+async function cancelPartnerMove(m) {
+  const bg = openModal(
+    '<h3>إلغاء حركة</h3>' +
+    '<p class="desc">' + esc(m.type) + ' · ' + esc(m.partnerName) + ' · ' + ltr(money(m.amount)) +
+      '<br>الحركة مش هتتمسح — هيتكتب عليها «ملغاة» والفلوس ترجع زي ما كانت.</p>' +
+    '<label>سبب الإلغاء (إجباري)</label><input id="pmRes" type="text" maxlength="120">' +
+    '<div class="modal-actions"><button class="btn-2" data-no>رجوع</button>' +
+    '<button class="btn-danger" data-ok>تأكيد الإلغاء</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  bg.querySelector('[data-ok]').onclick = async function () {
+    const btn = bg.querySelector('[data-ok]');
+    const reason = bg.querySelector('#pmRes').value.trim();
+    if (!reason) { toast('اكتب سبب الإلغاء.', 'err'); return; }
+    btnBusy(btn, true, 'بيلغي');
+    try {
+      const r = await api('cancelPartnerMove', { id: m.id, reason: reason }, { timeout: 60000 });
+      closeModal(bg);
+      toast(r.message, 'ok');
+      cashLoaded = false; dashLoaded = false;
+      await loadPartners(true);
+      loadCash(true);
+    } catch (e) {
+      toast(e.message, 'err');
+      btnBusy(btn, false);
+    }
+  };
+}
+
+async function openPartnerStatement(p) {
+  busy(true);
+  let r = null;
+  try { r = await api('partnerStatement', { id: p.id }, { timeout: 60000 }); }
+  catch (e) { busy(false); toast(e.message, 'err'); return; }
+  busy(false);
+
+  const rows = r.rows.map(function (x) {
+    const dead = (x.status === 'ملغاة' || x.status === 'ملغي');
+    return '<tr' + (dead ? ' style="opacity:.5;text-decoration:line-through"' : '') + '>' +
+      '<td>' + esc(x.type) + '</td>' +
+      '<td class="num">' + ltr(String(x.time).substring(0, 10)) + '</td>' +
+      '<td class="num">' + ltr(fmtNum(x.amount)) + '</td>' +
+      '<td class="num"><b>' + ltr(fmtNum(x.balance)) + '</b></td></tr>';
+  }).join('');
+
+  const m = r.partner;
+  const bg = openModal(
+    '<h3>كشف حساب ' + esc(p.name) + '</h3>' +
+    (rows ? '<div class="scroll-x"><table class="inv">' +
+      '<tr><th>الحركة</th><th>التاريخ</th><th>المبلغ</th><th>رصيد الحركات</th></tr>' +
+      rows + '</table></div>' : '<p class="desc">مفيش إيداعات ولا سحوبات لسه.</p>') +
+    '<div style="height:12px"></div>' +
+    '<div class="pf-row"><span>اللي حطه</span><span>' + ltr(money(m.deposited)) + '</span></div>' +
+    '<div class="pf-row"><span>− اللي سحبه</span><span class="neg">' + ltr(money(m.withdrawn)) + '</span></div>' +
+    '<div class="pf-row"><span>+ نصيبه من صافي الربح (' + ltr(fmtNum(m.share) + '٪') + ')</span><span>' +
+      ltr(money(m.profitShare)) + '</span></div>' +
+    '<div class="pf-row tot"><span>= رصيده</span><span>' + ltr(money(m.balance)) + '</span></div>' +
+    '<div class="modal-actions"><button class="btn-2" data-no>إغلاق</button>' +
+    '<button class="btn" data-print>🖨️ طباعة</button></div>'
+  );
+  bg.querySelector('[data-no]').onclick = function () { closeModal(bg); };
+  // الطباعة بتتجهّز مع الضغطة نفسها
+  bg.querySelector('[data-print]').onclick = function () { printPartner(p, r); };
+}
+
+function printPartner(p, r) {
+  const st = SETTINGS || {};
+  const cur = st.currency || 'ج.م';
+  const m = r.partner;
+  const rows = r.rows.map(function (x) {
+    return '<tr><td>' + esc(x.type) + (x.status === 'ملغاة' ? ' (ملغاة)' : '') + '</td>' +
+      '<td class="c">' + ltr(String(x.time).substring(0, 10)) + '</td>' +
+      '<td class="c">' + ltr(fmtNum(x.amount)) + '</td>' +
+      '<td class="c">' + ltr(fmtNum(x.balance)) + '</td></tr>';
+  }).join('');
+
+  $('printArea').innerHTML =
+    '<div class="pr-head">' +
+      '<div><div class="pr-store">' + esc(st.storeName || 'المحل') + '</div>' +
+      (st.phone ? '<div class="pr-sub">ت: ' + esc(st.phone) + '</div>' : '') + '</div>' +
+      '<div class="pr-title">كشف حساب شريك</div>' +
+    '</div>' +
+    '<div class="pr-meta"><div><b>الشريك:</b> ' + esc(p.name) + '</div>' +
+      '<div><b>نسبته:</b> ' + ltr(fmtNum(m.share) + '٪') + '</div>' +
+      '<div><b>اتطبع في:</b> ' + ltr(serverToday()) + '</div></div>' +
+    (rows ? '<table class="pr"><tr><th>الحركة</th><th style="width:90px">التاريخ</th>' +
+      '<th style="width:90px">المبلغ</th><th style="width:100px">رصيد الحركات</th></tr>' + rows + '</table>' : '') +
+    '<div class="pr-tot">' +
+      '<div class="row"><span>اللي حطه</span><span>' + ltr(fmtNum(m.deposited) + ' ' + cur) + '</span></div>' +
+      '<div class="row"><span>اللي سحبه</span><span>' + ltr(fmtNum(m.withdrawn) + ' ' + cur) + '</span></div>' +
+      '<div class="row"><span>نصيبه من صافي الربح</span><span>' + ltr(fmtNum(m.profitShare) + ' ' + cur) + '</span></div>' +
+      '<div class="row big"><span>رصيده</span><span>' + ltr(fmtNum(m.balance) + ' ' + cur) + '</span></div>' +
+    '</div>' +
+    '<div class="pr-foot">الربح محسوب على أساس التحصيل من أول السيستم</div>';
+
+  void $('printArea').offsetHeight;
+  window.print();
+  setTimeout(function () { $('printArea').innerHTML = ''; }, 4000);
+}
+
+/* ── الداش بورد ── */
+
+async function loadDash(force) {
+  // بنعيد تحميلها لو بقالها أكتر من دقيقتين، ولو حصل أي بيع أو حركة فلوس
+  // بنصفّر dashLoaded فورًا — فالأرقام مابتبقاش قديمة بعد عملية
+  if (dashLoaded && !force && (Date.now() - dashAt) < 120000) return true;
+  try {
+    const r = await api('dashboard', {}, { timeout: 60000 });
+    DASH = r; dashLoaded = true; dashAt = Date.now();
+    if (r.serverDate) SERVER_DATE = r.serverDate;
+    renderDash();
+    return true;
+  } catch (e) {
+    $('dbLow').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+    return false;
+  }
+}
+
+function renderDash() {
+  const d = DASH;
+  if (!d) return;
+  const isAdmin = ME.role === 'admin';
+
+  $('dbDrawer').innerHTML = ltr(money(d.cash.drawer));
+  if (isAdmin) {
+    $('dbMain').innerHTML  = ltr(money(d.cash.main));
+    $('dbTotal').innerHTML = ltr(money(d.cash.total));
+  }
+  $('dbToday').innerHTML =
+    'النهارده: مبيعات <b>' + ltr(money(d.today.sales)) + '</b>' +
+    ' · اتحصّل <b>' + ltr(money(d.today.collected)) + '</b>' +
+    (d.today.returns ? ' · مرتجعات <b>' + ltr(money(d.today.returns)) + '</b>' : '');
+
+  // المخزون الناقص
+  const lh = $('dbLow');
+  if (!d.lowStock || !d.lowStock.length) {
+    lh.innerHTML = '<div class="empty">مفيش صنف تحت الحد الأدنى. 👍</div>';
+  } else {
+    lh.innerHTML = d.lowStock.map(function (p) {
+      return '<div class="row-item"><div class="row-top"><div>' +
+        '<div class="row-name">' + esc(p.name) + '</div>' +
+        '<div class="row-sub">الحد الأدنى ' + ltr(fmtNum(p.minQty)) + '</div></div>' +
+        '<div class="cash-amt neg">' + ltr(fmtNum(p.qty)) + '</div></div></div>';
+    }).join('') +
+    (d.lowCount > d.lowStock.length
+      ? '<div class="row-sub" style="margin-top:8px">وكمان ' + ltr(fmtNum(d.lowCount - d.lowStock.length)) + ' صنف تاني.</div>'
+      : '');
+  }
+
+  if (!isAdmin) return;
+
+  renderDashProfit();
+
+  // الشركاء
+  const ph = $('dbPartners');
+  if (!d.partners || !d.partners.length) {
+    ph.innerHTML = '<div class="empty">مفيش شركاء مسجّلين. ضيفهم من تاب «الشركاء».</div>';
+  } else {
+    ph.innerHTML =
+      (Math.abs(d.shareSum - 100) > 0.01
+        ? '<div class="warn-box">⚠️ مجموع النسب ' + ltr(fmtNum(d.shareSum) + '٪') + ' مش ١٠٠٪.</div>'
+        : '') +
+      d.partners.map(function (p) {
+        return '<div class="row-item"><div class="row-top"><div>' +
+          '<div class="row-name">' + esc(p.name) + ' · ' + ltr(fmtNum(p.share) + '٪') + '</div>' +
+          '<div class="row-sub">حط ' + ltr(money(p.deposited)) + ' · سحب ' + ltr(money(p.withdrawn)) + '</div>' +
+          '<div class="row-sub">نصيبه من الربح ' + ltr(money(p.profitShare)) + '</div>' +
+          '</div><div class="cash-amt ' + (p.balance < 0 ? 'neg' : '') + '">' + ltr(money(p.balance)) + '</div>' +
+          '</div></div>';
+      }).join('');
+  }
+
+  // آخر الفواتير
+  const ih = $('dbLast');
+  if (!d.lastInvoices || !d.lastInvoices.length) {
+    ih.innerHTML = '<div class="empty">مفيش فواتير لسه.</div>';
+  } else {
+    ih.innerHTML = d.lastInvoices.map(function (x) {
+      const dead = (x.status === 'ملغاة');
+      return '<div class="row-item' + (dead ? ' prod-off' : '') + '"><div class="row-top"><div>' +
+        '<div class="row-name">' + ltr(x.number) + ' · ' + esc(x.type) +
+          (dead ? ' <span class="badge badge-off">ملغاة</span>' : '') + '</div>' +
+        '<div class="row-sub">' + ltr(String(x.time).substring(0, 16)) +
+          (x.customer ? ' · ' + esc(x.customer) : '') + '</div>' +
+        '</div><div class="cash-amt">' + ltr(money(x.total)) + '</div></div></div>';
+    }).join('');
+  }
+}
+
+function renderDashProfit() {
+  const d = DASH;
+  if (!d || !d.profit) return;
+  const p = (dbProfMode === 'all') ? d.profit.all : d.profit.month;
+  $('dbProfit').innerHTML =
+    '<div class="pf-row"><span>المحصّل من المبيعات</span><span>' + ltr(money(p.collected)) + '</span></div>' +
+    '<div class="pf-row"><span>− تكلفة البضاعة المحصّلة</span><span class="neg">' + ltr(money(p.cogs)) + '</span></div>' +
+    '<div class="pf-row"><span>− المصاريف</span><span class="neg">' + ltr(money(p.expenses)) + '</span></div>' +
+    '<div class="pf-row tot"><span>= صافي الربح</span><span>' + ltr(money(p.net)) + '</span></div>' +
+    '<div class="pf-note">لسه عند العملاء: <b>' + ltr(money(d.stillOwed)) + '</b>' +
+      ' · التفاصيل والفترات في تاب <b>المصاريف ← الأرباح</b>.</div>';
+}
+
+/* ── ربط ── */
+$('btnAddPartner').addEventListener('click', function () { openPartnerModal(null); });
+$('btnReloadPt').addEventListener('click', async function () {
+  const btn = $('btnReloadPt');
+  btnBusy(btn, true, 'بيحدّث'); const d = await loadPartners(true); btnBusy(btn, false);
+  if (d) toast('اتحدّثت بيانات الشركاء.', 'ok');
+});
+$('btnDashReload').addEventListener('click', async function () {
+  const btn = $('btnDashReload');
+  btnBusy(btn, true, '…'); const d = await loadDash(true); btnBusy(btn, false);
+  if (d) toast('اتحدّثت الصفحة.', 'ok');
+});
+document.querySelectorAll('#dbProfSubs button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    dbProfMode = b.dataset.dbp;
+    document.querySelectorAll('#dbProfSubs button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    renderDashProfit();
+  });
 });
 
 
